@@ -6,7 +6,8 @@ const puppeteer = require('puppeteer');
 const { PrismaClient } = require('@prisma/client');
 const crypto = require('crypto');
 const path = require('path');
-const fs = require('fs');
+const { loadEnv } = require('../src/config/env');
+const envConfig = loadEnv();
 
 const prisma = new PrismaClient();
 
@@ -33,10 +34,17 @@ function decrypt(encryptedText) {
 }
 
 async function getApiKeyFromDb() {
+  const { decrypt } = require('../src/utils/crypto');
   const settings = await prisma.settings.findUnique({ where: { id: "singleton" } });
-  if (!settings) throw new Error("No settings found in SQLite DB.");
-  const data = JSON.parse(decrypt(settings.dataJson));
-  return { apiKey: data.GEMINI_API_KEY, model: data.GEMINI_MODEL };
+  if (!settings || !settings.dataJson) return { apiKey: process.env.GEMINI_API_KEY || "", model: "gemini-3.5-flash-lite" };
+  const decrypted = decrypt(settings.dataJson);
+  if (!decrypted) return { apiKey: process.env.GEMINI_API_KEY || "", model: "gemini-3.5-flash-lite" };
+  try {
+    const data = JSON.parse(decrypted);
+    return { apiKey: data.GEMINI_API_KEY || process.env.GEMINI_API_KEY || "", model: data.GEMINI_MODEL || "gemini-3.5-flash-lite" };
+  } catch (e) {
+    return { apiKey: process.env.GEMINI_API_KEY || "", model: "gemini-3.5-flash-lite" };
+  }
 }
 
 async function run() {
@@ -120,8 +128,30 @@ async function run() {
     const appPage = await browser.newPage();
     await appPage.goto('http://localhost:5000/mock-app.html');
     
-    // Wait for loading spinner to clear
-    console.log("Waiting for form container to load...");
+    // Wait for loading spinner to clear and either auth-container or app-container to display
+    await appPage.waitForFunction(() => {
+      const auth = document.getElementById('auth-container');
+      const app = document.getElementById('app-container');
+      return (auth && auth.style.display !== 'none') || (app && app.style.display !== 'none');
+    }, { timeout: 8000 });
+
+    const authVisible = await appPage.evaluate(() => {
+      const authEl = document.getElementById('auth-container');
+      return authEl && authEl.style.display !== 'none';
+    });
+
+    if (authVisible) {
+      console.log("Auth container detected. Signing up / logging in to unlock application form...");
+      const testEmail = (envConfig.parsed && envConfig.parsed.USERNAME) || 'sadit@drew.edu';
+      await appPage.type('#auth-email', testEmail);
+      await appPage.type('#auth-password', process.env.PASSWORD || 'jqsJx340wcXN*');
+      const confirmPass = await appPage.$('#auth-confirm-password');
+      if (confirmPass) {
+        await appPage.type('#auth-confirm-password', process.env.PASSWORD || 'jqsJx340wcXN*');
+      }
+      await appPage.click('#auth-submit-btn');
+    }
+
     await appPage.waitForSelector('#app-container', { visible: true, timeout: 5000 });
     
     // Verify Job Description is visible
