@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Job Agent - Home Workspace</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="icon" type="image/png" href="icon.png">
+</head>
+<body>
+  <div class="header-bar">
+    <div class="logo-section">
+      <img src="icon.png" class="logo-icon" alt="Logo">
+      <div class="title-h">AI Job Agent Workspace</div>
+    </div>
+    <div class="dashboard-live-info">
+      <span class="dashboard-live-indicator"></span>
+      <span>Secure Local Browser Sandbox</span>
+    </div>
+  </div>
+
+  <div class="workspace-layout">
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar-menu">
+      <button class="menu-btn active" data-tab="tab-profile">👤 Master Profile</button>
+      <button class="menu-btn" data-tab="tab-resume">📄 Resume Workspace</button>
+      <button class="menu-btn" data-tab="tab-letters">📝 Cover Letters</button>
+      <a href="tracker.html" class="menu-btn">📊 Application Tracker</a>
+      <button class="menu-btn" data-tab="tab-replays">🐞 Replay & Diagnostics</button>
+      <button class="menu-btn" data-tab="tab-preferences">🎯 Job Preferences</button>
+      <button class="menu-btn" data-tab="tab-benchmarks">📈 Benchmarks</button>
+      <button class="menu-btn" data-tab="tab-settings">⚙️ Settings & Backup</button>
+    </div>
+
+    <!-- RIGHT CONTENT AREA -->
+    <div class="content-area">
+
+      <!-- TAB 1: MASTER PROFILE -->
+      <div id="tab-profile" class="tab-content active">
+        <div class="flex-between dashboard-header-spacing">
+          <div>
+            <h2 class="tracker-title-large">Candidate Semantic Memory</h2>
+            <p class="dashboard-desc-text">The structured profile containing facts used by the AI to fill application inputs.</p>
+          </div>
+          <button id="direct-edit-json-btn" class="btn btn-secondary">✏️ Direct Edit JSON</button>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Left Col: Sub-sections -->
+          <div class="flex-column-gap">
+            <!-- Personal details -->
+            <div class="glass glass-padding">
+              <h3 class="section-title">👤 Contact details</h3>
+              <div class="info-grid">
+                <div class="profile-field"><label>Full Name</label><span id="prof-name">Not Specified</span></div>
+                <div class="profile-field"><label>Preferred Name</label><span id="prof-preferredName">Not Specified</span></div>
+                <div class="profile-field"><label>Email Address</label><span id="prof-email">Not Specified</span></div>
+                <div class="profile-field"><label>Phone Number</label><span id="prof-phone">Not Specified</span></div>
+                <div class="profile-field full-width"><label>Location Address</label><span id="prof-location">Not Specified</span></div>
+                <div class="profile-field"><label>Gender</label><span id="prof-gender">Not Specified</span></div>
+                <div class="profile-field"><label>Race / Ethnicity</label><span id="prof-race">Not Specified</span></div>
+                <div class="profile-field"><label>Veteran Status</label><span id="prof-veteran">Not Specified</span></div>
+              </div>
+            </div>
+
+            <!-- Education -->
+            <div class="glass glass-padding">
+              <h3 class="section-title">🎓 Education history</h3>
+              <div id="prof-education-list" class="education-container-flex">
+                <span class="text-muted-size">None listed</span>
+              </div>
+            </div>
+
+            <!-- Experience -->
+            <div class="glass glass-padding">
+              <h3 class="section-title">💼 Employment experience</h3>
+              <div id="prof-experience-list" class="experience-container-flex">
+                <span class="text-muted-size">None listed</span>
+              </div>
+            </div>
+
+            <!-- Projects -->
+            <div class="glass glass-padding">
+              <h3 class="section-title">🚀 Side projects</h3>
+              <div id="prof-projects-list" class="projects-container-flex">
+                <span class="text-muted-size">None listed</span>
+              </div>
+            </div>
+
+            <!-- Custom answers -->
+            <div class="glass glass-padding">
+              <h3 class="section-title">💬 Cached custom answers</h3>
+              <div id="prof-qa-list" class="qa-container-flex">
+                <span class="text-muted-size">None saved yet. Answers synced from forms appear here.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Col: Skills & Badges -->
+          <div class="flex-column-gap">
+            <div class="glass glass-padding">
+              <h3 class="section-title">⚡ Professional skills</h3>
+              <div id="prof-skills" class="tag-container">
+                <span class="text-muted-size">None listed</span>
+              </div>
+            </div>
+            <div class="glass glass-padding">
+              <h3 class="section-title">🎖️ Certifications</h3>
+              <div id="prof-certs" class="tag-container">
+                <span class="text-muted-size">None listed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: RESUME WORKSPACE -->
+      <div id="tab-resume" class="tab-content">
+        <div class="flex-between dashboard-header-spacing">
+          <div>
+            <h2 class="tracker-title-large">📄 Resume & Document manager</h2>
+            <p class="dashboard-desc-text">Manage your primary resume. This document is parsed to build your profile, and gets attached to application upload slots.</p>
+          </div>
+        </div>
+
+        <div class="uploader-stretch-grid">
+          <!-- Upload Widget -->
+          <div class="glass glass-padding flex-column-gap">
+            <div>
+              <h3 class="heading-large-bold">Upload New Resume</h3>
+              <p class="desc-small-text">Selecting a new PDF or DOCX file triggers Gemini to parse out updated milestones and prompts a profile merge review.</p>
+            </div>
+            <div class="input-container-vertical">
+              <input type="file" id="pdf-upload-input" accept="application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="btn-block">
+              <div style="display: flex; align-items: center; gap: 8px; margin: 4px 0 8px 0; width: 100%;">
+                <input type="checkbox" id="sync-profile-checkbox" checked style="width: auto; cursor: pointer; margin: 0;">
+                <label for="sync-profile-checkbox" style="font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; user-select: none;">
+                  Parse with AI and sync to master profile
+                </label>
+              </div>
+              <button id="upload-btn" class="btn btn-primary btn-block" disabled>
+                ⚡ Parse & Upload Resume PDF
+              </button>
+              <div id="upload-status" class="upload-status-text">Select a PDF resume file.</div>
+            </div>
+          </div>
+
+          <!-- Active Reference PDF Card -->
+          <div class="glass glass-padding flex-column-gap min-height-card">
+            <h3 class="heading-large-bold">Active Reference Document</h3>
+            <div id="active-resume-card" class="active-resume-wrapper">
+              <div class="icon-resume-placeholder">📄</div>
+              <div class="text-muted-size">No resume PDF stored in local storage yet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: COVER LETTERS -->
+      <div id="tab-letters" class="tab-content">
+        <div class="flex-between dashboard-header-spacing">
+          <div>
+            <h2 class="tracker-title-large">📝 Cover Letter Knowledge Base</h2>
+            <p class="dashboard-desc-text">Save previously written cover letters. The AI extracts your exact formatting, tone, and results to train its generation engine.</p>
+          </div>
+          <button id="add-letter-btn" class="btn btn-primary">➕ Add Past Cover Letter</button>
+        </div>
+
+        <div id="letters-list-container" class="letters-list">
+          <!-- Cover Letters rendered dynamically -->
+          <div class="letters-empty-box">No past cover letters stored yet. Click add to train the AI.</div>
+        </div>
+      </div>
+
+      <!-- TAB 5: SETTINGS & BACKUPS -->
+      <div id="tab-settings" class="tab-content">
+        <h2 class="tracker-title-large dashboard-header-spacing">⚙️ Workspace Configuration</h2>
+
+        <div class="settings-layout-box">
+          <!-- AI Keys -->
+          <div class="glass glass-padding config-inner-box">
+            <h3 class="config-header-text">🔑 API Key Settings</h3>
+            <div class="field-v-alignment">
+              <label class="form-label-semibold">Google Gemini API Key</label>
+              <input type="password" id="settings-gemini-key" placeholder="Enter Gemini AI API Key">
+            </div>
+            <div class="field-v-alignment">
+              <label class="form-label-semibold">Gemini AI Model Type</label>
+              <select id="settings-gemini-model">
+                <option value="gemini-2.5-flash">gemini-2.5-flash (Latest Flash)</option>
+                <option value="gemini-1.5-pro">gemini-1.5-pro (High intelligence)</option>
+              </select>
+            </div>
+            <div class="field-v-alignment">
+              <label class="form-label-semibold">Default Portal Email (Autofill Fallback)</label>
+              <input type="text" id="settings-default-email" placeholder="e.g. sadit@drew.edu">
+            </div>
+            <div class="field-v-alignment">
+              <label class="form-label-semibold">Default Portal Password (Autofill Fallback)</label>
+              <input type="password" id="settings-default-password" placeholder="••••••••">
+            </div>
+            <div class="field-v-alignment">
+              <label class="form-label-semibold">Custom Essay/Long Answer Prompt Template</label>
+              <textarea id="settings-custom-essay-prompt" rows="3" placeholder="e.g. Generate a professional response to the question &quot;{QUESTION}&quot; using candidate profile facts..."></textarea>
+              <span class="desc-small-text" style="margin-top: 4px; color: var(--text-secondary);">Customize how the AI generates long answers. Use <code>{QUESTION}</code> to automatically insert the field's question.</span>
+            </div>
+            <button id="save-settings-btn" class="btn btn-primary btn-fit-margin">Save API Configuration</button>
+            <div id="settings-status" class="settings-status-success">Configuration saved!</div>
+          </div>
+
+          <!-- Portal Accounts database -->
+          <div class="glass glass-padding config-inner-box">
+            <div class="flex-between border-bottom-padding">
+              <h3 class="heading-large-bold">🔒 Portal Login Accounts</h3>
+              <button id="add-portal-btn" class="btn btn-secondary btn-padding-small">Add Login Account</button>
+            </div>
+            <p class="desc-small-text">Credentials stored here are filled automatically when the extension scans a page containing login or signup fields.</p>
+            <div id="portals-list-container">
+              <!-- Credentials rendered dynamically -->
+              <div class="portals-empty-box">No portal credentials stored yet.</div>
+            </div>
+          </div>
+
+          <!-- Backup / Restore -->
+          <div class="glass glass-padding config-inner-box">
+            <h3 class="config-header-text">💾 Backup & Sync</h3>
+            <p class="desc-small-text">Save all your data, including PDF resumes, applications list, cover letters, and master profile memory, into a single JSON file. You can import this file to restore your workspace on any device.</p>
+            
+            <div class="flex-row-gap-center">
+              <button id="export-backup-btn" class="btn btn-primary">⬇️ Export All Data (Backup JSON)</button>
+              <div class="vertical-divider"></div>
+              <input type="file" id="import-backup-input" accept="application/json" class="display-none">
+              <button id="import-backup-btn" class="btn btn-secondary">⬆️ Import Data Backup</button>
+            </div>
+            <div id="backup-status" class="backup-status-success">Backup restored successfully! Refreshing dashboard...</div>
+
+            <div style="margin-top: 1.25rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+              <h4 class="config-header-text" style="font-size: 0.95rem; margin-bottom: 0.5rem;">📁 Local Database Sync</h4>
+              <p class="desc-small-text" style="margin-bottom: 0.75rem;">If you run the local database offline, start the server and run this sync to force-push all your current extension documents (resumes and cover letters) into the SQLite database files.</p>
+              <div class="flex-row-gap-center">
+                <button id="sync-db-btn" class="btn btn-secondary">🔄 Push Storage to SQLite Database</button>
+                <span id="sync-db-status" style="margin-left: 12px; font-size: 0.85rem; font-weight: 500; display: none;"></span>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <!-- TAB 6: REPLAYS & DIAGNOSTICS -->
+      <div id="tab-replays" class="tab-content">
+        <div class="flex-between dashboard-header-spacing">
+          <div>
+            <h2 class="tracker-title-large">🐞 Replay & Diagnostics</h2>
+            <p class="dashboard-desc-text">Inspect failed autofill sessions, review action histories, and trigger automated replays to debug.</p>
+          </div>
+        </div>
+
+        <div id="replays-list-container" class="letters-list">
+          <div class="letters-empty-box">No failure replay sessions recorded. The agent is running smoothly!</div>
+        </div>
+      </div>
+
+      <!-- TAB 7: JOB PREFERENCES -->
+      <div id="tab-preferences" class="tab-content">
+        <div class="flex-between dashboard-header-spacing">
+          <div>
+            <h2 class="tracker-title-large">🎯 Job Preferences</h2>
+            <p class="dashboard-desc-text">Configure your job search preferences. The AI uses these to fill visa, salary, remote, and relocation questions automatically.</p>
+          </div>
+          <button class="btn btn-primary" id="save-preferences-btn">💾 Save Preferences</button>
+        </div>
+
+        <div class="grid grid-2-col" style="gap: 20px; margin-top: 16px;">
+          <!-- Left: Work Authorization -->
+          <div class="glass card-box" style="padding: 20px;">
+            <h3 class="section-title">🛂 Work Authorization</h3>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Visa Status</label>
+              <input type="text" id="pref-visa-status" placeholder="e.g. F-1 OPT, H-1B, US Citizen, Green Card" class="input-text-field">
+            </div>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Authorized to Work in US?</label>
+              <select id="pref-authorized" class="select-field">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </select>
+            </div>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Sponsorship Required?</label>
+              <select id="pref-sponsorship" class="select-field">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Right: Compensation -->
+          <div class="glass card-box" style="padding: 20px;">
+            <h3 class="section-title">💰 Compensation</h3>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Expected Salary</label>
+              <input type="text" id="pref-salary" placeholder="e.g. 120000" class="input-text-field">
+            </div>
+            <div class="field-v-alignment" style="display:flex; gap: 10px;">
+              <div style="flex:1">
+                <label class="label-grey-text">Min Salary</label>
+                <input type="text" id="pref-salary-min" placeholder="e.g. 100000" class="input-text-field">
+              </div>
+              <div style="flex:1">
+                <label class="label-grey-text">Max Salary</label>
+                <input type="text" id="pref-salary-max" placeholder="e.g. 150000" class="input-text-field">
+              </div>
+            </div>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Currency</label>
+              <input type="text" id="pref-currency" placeholder="USD" class="input-text-field" style="max-width:100px;">
+            </div>
+          </div>
+
+          <!-- Work Style -->
+          <div class="glass card-box" style="padding: 20px;">
+            <h3 class="section-title">🏠 Work Style</h3>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Remote?</label>
+              <select id="pref-remote" class="select-field">
+                <option value="true">Yes — Open to Remote</option>
+                <option value="false">No — Prefer In-Person</option>
+              </select>
+            </div>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Willing to Relocate?</label>
+              <select id="pref-relocate" class="select-field">
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </div>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Preferred Locations (comma-separated)</label>
+              <input type="text" id="pref-locations" placeholder="e.g. New York NY, San Francisco CA, Remote" class="input-text-field">
+            </div>
+          </div>
+
+          <!-- Availability -->
+          <div class="glass card-box" style="padding: 20px;">
+            <h3 class="section-title">📅 Availability</h3>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Employment Types</label>
+              <input type="text" id="pref-employment-types" placeholder="e.g. Full-time, Contract" class="input-text-field">
+            </div>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Notice Period</label>
+              <input type="text" id="pref-notice" placeholder="e.g. 2 weeks, Immediately" class="input-text-field">
+            </div>
+            <div class="field-v-alignment">
+              <label class="label-grey-text">Availability Date</label>
+              <input type="date" id="pref-availability-date" class="input-text-field">
+            </div>
+          </div>
+        </div>
+        <div id="preferences-status" style="display:none; margin-top: 12px; color: var(--color-success); font-size: 0.85rem; font-weight: 600;">✅ Preferences saved!</div>
+      </div>
+
+      <!-- TAB 8: BENCHMARKS (Phase 6 — rebuilt with Chart.js) -->
+      <div id="tab-benchmarks" class="tab-content">
+
+        <!-- Header row -->
+        <div class="flex-between dashboard-header-spacing">
+          <div>
+            <h2 class="tracker-title-large">📈 Benchmark Metrics</h2>
+            <p class="dashboard-desc-text">Performance history of the AI autofill agent across sessions. Track trends, compare platforms, and run regression checks.</p>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <!-- Platform filter -->
+            <select id="bm-platform-filter" style="padding:7px 12px; background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:6px; color:#fff; font-size:0.82rem; cursor:pointer;">
+              <option value="all">All Platforms</option>
+              <option value="greenhouse">Greenhouse</option>
+              <option value="lever">Lever</option>
+              <option value="workday">Workday</option>
+              <option value="ashby">Ashby</option>
+              <option value="icims">iCIMS</option>
+              <option value="taleo">Taleo</option>
+              <option value="synthetic-ats">Synthetic ATS</option>
+            </select>
+            <button class="btn btn-secondary" id="refresh-benchmarks-btn" style="white-space:nowrap;">🔄 Refresh</button>
+            <a href="http://localhost:5000/synthetic-ats/" target="_blank" class="btn btn-secondary" style="text-decoration:none; white-space:nowrap;">🧪 Run Test ATS</a>
+          </div>
+        </div>
+
+        <!-- KPI Score Cards row -->
+        <div id="benchmark-score-cards" style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:16px;">
+
+          <div class="glass card-box bm-kpi-card">
+            <div class="bm-kpi-label">Completion Rate</div>
+            <div class="bm-kpi-value" id="bm-completion" style="color:#10b981;">—</div>
+            <div class="bm-kpi-delta" id="bm-completion-delta"></div>
+            <div class="bm-kpi-bar-wrap"><div class="bm-kpi-bar" id="bm-completion-bar" style="background:#10b981; width:0%;"></div></div>
+          </div>
+
+          <div class="glass card-box bm-kpi-card">
+            <div class="bm-kpi-label">Field Accuracy</div>
+            <div class="bm-kpi-value" id="bm-accuracy" style="color:#6366f1;">—</div>
+            <div class="bm-kpi-delta" id="bm-accuracy-delta"></div>
+            <div class="bm-kpi-bar-wrap"><div class="bm-kpi-bar" id="bm-accuracy-bar" style="background:#6366f1; width:0%;"></div></div>
+          </div>
+
+          <div class="glass card-box bm-kpi-card">
+            <div class="bm-kpi-label">Avg Confidence</div>
+            <div class="bm-kpi-value" id="bm-confidence" style="color:#f59e0b;">—</div>
+            <div class="bm-kpi-delta" id="bm-confidence-delta"></div>
+            <div class="bm-kpi-bar-wrap"><div class="bm-kpi-bar" id="bm-confidence-bar" style="background:#f59e0b; width:0%;"></div></div>
+          </div>
+
+          <div class="glass card-box bm-kpi-card">
+            <div class="bm-kpi-label">Semantic Accuracy</div>
+            <div class="bm-kpi-value" id="bm-semantic" style="color:#8b5cf6;">—</div>
+            <div class="bm-kpi-delta" id="bm-semantic-delta"></div>
+            <div class="bm-kpi-bar-wrap"><div class="bm-kpi-bar" id="bm-semantic-bar" style="background:#8b5cf6; width:0%;"></div></div>
+          </div>
+
+          <div class="glass card-box bm-kpi-card">
+            <div class="bm-kpi-label">Recovery Rate</div>
+            <div class="bm-kpi-value" id="bm-recovery" style="color:#06b6d4;">—</div>
+            <div class="bm-kpi-delta" id="bm-recovery-delta"></div>
+            <div class="bm-kpi-bar-wrap"><div class="bm-kpi-bar" id="bm-recovery-bar" style="background:#06b6d4; width:0%;"></div></div>
+          </div>
+
+          <div class="glass card-box bm-kpi-card">
+            <div class="bm-kpi-label">Skip Rate</div>
+            <div class="bm-kpi-value" id="bm-skip" style="color:#f97316;">—</div>
+            <div class="bm-kpi-delta" id="bm-skip-delta"></div>
+            <div class="bm-kpi-bar-wrap"><div class="bm-kpi-bar" id="bm-skip-bar" style="background:#f97316; width:0%;"></div></div>
+          </div>
+
+          <div class="glass card-box bm-kpi-card">
+            <div class="bm-kpi-label">Hallucinations</div>
+            <div class="bm-kpi-value" id="bm-hallucinations" style="color:#ef4444;">—</div>
+            <div class="bm-kpi-delta" id="bm-hallucinations-delta"></div>
+            <div class="bm-kpi-bar-wrap"><div class="bm-kpi-bar" id="bm-hallucinations-bar" style="background:#ef4444; width:0%;"></div></div>
+          </div>
+
+          <div class="glass card-box bm-kpi-card">
+            <div class="bm-kpi-label">Avg Fill Time</div>
+            <div class="bm-kpi-value" id="bm-time" style="color:#94a3b8;">—</div>
+            <div class="bm-kpi-delta" id="bm-time-delta"></div>
+            <div class="bm-kpi-bar-wrap"><div class="bm-kpi-bar" id="bm-time-bar" style="background:#94a3b8; width:0%;"></div></div>
+          </div>
+
+        </div>
+
+        <!-- Chart.js Trend Charts row -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;">
+
+          <!-- Completion + Accuracy Line Chart -->
+          <div class="glass card-box" style="padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+              <h3 class="section-title" style="margin:0;">📊 Accuracy Trends</h3>
+              <div style="display:flex; gap:12px; font-size:0.72rem; color:var(--text-muted);">
+                <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;margin-right:4px;"></span>Completion</span>
+                <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#6366f1;margin-right:4px;"></span>Accuracy</span>
+                <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#8b5cf6;margin-right:4px;"></span>Semantic</span>
+              </div>
+            </div>
+            <div style="position:relative; height:180px;">
+              <canvas id="bm-chart-accuracy"></canvas>
+            </div>
+            <div id="bm-chart-accuracy-empty" style="display:none; text-align:center; color:var(--text-muted); font-size:0.8rem; padding:40px 0;">No session data yet. Run the agent to generate benchmarks.</div>
+          </div>
+
+          <!-- Confidence + Recovery Chart -->
+          <div class="glass card-box" style="padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+              <h3 class="section-title" style="margin:0;">🎯 Confidence & Recovery</h3>
+              <div style="display:flex; gap:12px; font-size:0.72rem; color:var(--text-muted);">
+                <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;margin-right:4px;"></span>Confidence</span>
+                <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#06b6d4;margin-right:4px;"></span>Recovery</span>
+              </div>
+            </div>
+            <div style="position:relative; height:180px;">
+              <canvas id="bm-chart-confidence"></canvas>
+            </div>
+            <div id="bm-chart-confidence-empty" style="display:none; text-align:center; color:var(--text-muted); font-size:0.8rem; padding:40px 0;">No session data yet.</div>
+          </div>
+
+          <!-- Error & Skip Rate Bar Chart -->
+          <div class="glass card-box" style="padding:20px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+              <h3 class="section-title" style="margin:0;">⚠️ Error & Skip Rates</h3>
+              <div style="display:flex; gap:12px; font-size:0.72rem; color:var(--text-muted);">
+                <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;margin-right:4px;"></span>Error Rate</span>
+                <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f97316;margin-right:4px;"></span>Skip Rate</span>
+              </div>
+            </div>
+            <div style="position:relative; height:180px;">
+              <canvas id="bm-chart-errors"></canvas>
+            </div>
+            <div id="bm-chart-errors-empty" style="display:none; text-align:center; color:var(--text-muted); font-size:0.8rem; padding:40px 0;">No session data yet.</div>
+          </div>
+
+          <!-- Platform Distribution Doughnut -->
+          <div class="glass card-box" style="padding:20px;">
+            <div style="margin-bottom:14px;">
+              <h3 class="section-title" style="margin:0;">🌐 Platform Distribution</h3>
+            </div>
+            <div style="display:flex; align-items:center; gap:20px; height:180px;">
+              <div style="position:relative; width:160px; height:160px; flex-shrink:0;">
+                <canvas id="bm-chart-platforms"></canvas>
+              </div>
+              <div id="bm-platform-legend" style="font-size:0.75rem; display:flex; flex-direction:column; gap:6px; flex:1;"></div>
+            </div>
+            <div id="bm-chart-platforms-empty" style="display:none; text-align:center; color:var(--text-muted); font-size:0.8rem; padding:40px 0;">No session data yet.</div>
+          </div>
+
+        </div>
+
+        <!-- Regression Status Banner -->
+        <div id="bm-regression-banner" style="display:none; margin-top:16px; padding:14px 18px; border-radius:8px; font-size:0.85rem; font-weight:600; display:none; align-items:center; gap:10px;"></div>
+
+        <!-- Session History Table -->
+        <div class="glass card-box" style="padding:20px; margin-top:20px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+            <h3 class="section-title" style="margin:0;">🕓 Session History</h3>
+            <span id="bm-session-count" style="font-size:0.78rem; color:var(--text-muted);"></span>
+          </div>
+          <div id="benchmark-table-container">
+            <div class="letters-empty-box">No benchmark sessions yet. Run the autofill agent on the test ATS to generate data.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DIRECT EDIT JSON MODAL -->
+  <div id="json-modal" class="modal-overlay">
+    <div class="glass glass-glow modal-container modal-json-size">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title-text">Edit Profile JSON Directly</h3>
+          <span class="desc-small-text">Bypasses parsing filters. Maintain syntax correctness.</span>
+        </div>
+        <button class="close-btn" id="close-json-modal">&times;</button>
+      </div>
+      <div class="modal-body modal-header-container">
+        <textarea id="json-textarea" class="textarea-modal"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-json-btn">Cancel</button>
+        <button class="btn btn-primary" id="save-json-btn">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MERGE REVIEW MODAL -->
+  <div id="merge-modal" class="modal-overlay">
+    <div class="glass glass-glow modal-container modal-large-size">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title-text">📑 Integrate Document Merges</h3>
+          <span class="desc-small-text">AI parsed the PDF. Select updates to overwrite or append.</span>
+        </div>
+        <button class="close-btn" id="close-merge-modal">&times;</button>
+      </div>
+      <div class="modal-body modal-scroll-body">
+        <div id="merge-diff-contents" class="diff-contents-column">
+          <!-- Diff sections are rendered dynamically -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-merge-btn">Cancel</button>
+        <button class="btn btn-primary" id="save-merge-btn">Apply Approved Merges</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTAL CREDENTIALS MODAL -->
+  <div id="portal-modal" class="modal-overlay">
+    <div class="glass glass-glow modal-container modal-small-size">
+      <div class="modal-header">
+        <h3 class="modal-title-text">Add Portal Account</h3>
+        <button class="close-btn" id="close-portal-modal">&times;</button>
+      </div>
+      <div class="modal-body input-fields-vertical">
+        <div class="field-v-alignment">
+          <label class="label-grey-text">Portal Domain Prefix</label>
+          <input type="text" id="portal-domain" placeholder="e.g. workday">
+        </div>
+        <div class="field-v-alignment">
+          <label class="label-grey-text">Username / Email</label>
+          <input type="text" id="portal-username" placeholder="name@email.com">
+        </div>
+        <div class="field-v-alignment">
+          <label class="label-grey-text">Password</label>
+          <input type="password" id="portal-password" placeholder="••••••••">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-portal-btn">Cancel</button>
+        <button class="btn btn-primary" id="save-portal-btn">Save Credentials</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COVER LETTER ADD/EDIT MODAL -->
+  <div id="letter-modal" class="modal-overlay">
+    <div class="glass glass-glow modal-container app-modal-size">
+      <div class="modal-header">
+        <h3 class="modal-title-text" id="letter-modal-title">Add Past Cover Letter</h3>
+        <button class="close-btn" id="close-letter-modal">&times;</button>
+      </div>
+      <div class="modal-body input-fields-vertical">
+        <input type="hidden" id="letter-id">
+        <div class="field-v-alignment">
+          <label class="label-grey-text">Upload Past Cover Letter Document (Optional PDF or DOCX)</label>
+          <input type="file" id="letter-file-input" accept="application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+        </div>
+        <div class="field-v-alignment">
+          <label class="label-grey-text">Cover Letter Identifier (e.g. AFFINE Application)</label>
+          <input type="text" id="letter-name" placeholder="e.g. AFFINE Software Engineer Cover Letter">
+        </div>
+        <div class="field-v-alignment">
+          <label class="label-grey-text">Cover Letter Content</label>
+          <textarea id="letter-text" placeholder="Paste the text or upload a PDF/DOCX above. The AI will parse its format, wording style, and achievements..." class="textarea-letter-box"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span id="letter-status-message" style="color: var(--text-muted); font-size: 0.85rem; margin-right: auto; display: none;">🧠 Training AI...</span>
+        <button class="btn btn-secondary" id="cancel-letter-btn">Cancel</button>
+        <button class="btn btn-primary" id="save-letter-btn">Save & Analyze</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart.js bundled locally (no CDN/CSP issues in Chrome Extension) -->
+  <script src="chart.umd.min.js"></script>
+  <script src="dashboard.js?v=2.0.0" type="module"></script>
+</body>
+</html>

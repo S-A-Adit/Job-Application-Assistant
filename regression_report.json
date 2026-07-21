@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-07-15T20:28:07.967Z",
+  "completionRate": 1,
+  "recoveryRate": 1,
+  "clickEfficiency": {
+    "totalClicks": 2,
+    "expectedClicks": 2,
+    "score": 1
+  },
+  "formAccuracy": {
+    "totalFieldsScanned": 11,
+    "totalFieldsCorrect": 11,
+    "score": 1
+  },
+  "timeElapsedSeconds": 46
+}

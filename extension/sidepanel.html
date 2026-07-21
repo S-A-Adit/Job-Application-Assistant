@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Job Agent - Controller</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="sidepanel.css">
+  <link rel="icon" type="image/png" href="icon.png">
+  <style>
+    /* Popup-like styling adjustment inside sidepanel */
+    .sp-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+    }
+    .sp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+      margin-bottom: 8px;
+    }
+    .close-btn-style {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 8px;
+      transition: var(--transition-fast);
+    }
+    .close-btn-style:hover {
+      color: #ef4444;
+    }
+    .detected-job-text {
+      font-weight: 600;
+      color: #fff;
+      display: none;
+      margin-top: 4px;
+      font-size: 0.9rem;
+    }
+    .sp-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .action-btn-full {
+      width: 100%;
+      padding: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .home-btn-style {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: color 0.2s, transform 0.2s;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .home-btn-style:hover {
+      color: #fff;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="sp-container">
+    <div class="sp-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div class="logo-container" style="display: flex; align-items: center; gap: 10px;">
+        <img src="icon.png" class="logo-img" alt="Logo" style="width: 28px; height: 28px; border-radius: 6px;">
+        <div class="logo-title" style="font-size: 1.25rem; font-weight: 700; color: #fff;">AI Job Agent</div>
+      </div>
+      <button id="sp-home-btn" class="home-btn-style" title="Open Dashboard (Home)">🏠</button>
+    </div>
+
+    <!-- Active Page Status Card -->
+    <div id="status-box" class="glass card-box" style="padding: 12px; border-radius: 8px;">
+      <span class="label-small" style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">Active Page Status</span>
+      <div id="status-message" class="status-msg" style="margin-top: 4px; font-size: 0.85rem; color: var(--text-secondary);">Scanning page...</div>
+      <div id="detected-job-info" class="detected-job-text"></div>
+    </div>
+
+    <!-- Portal Sign-in Card -->
+    <div id="portal-card" class="glass card-box" style="background: rgba(6, 182, 212, 0.04); border: 1px solid rgba(6, 182, 212, 0.15); padding: 12px; border-radius: 8px; display: none;">
+      <div class="portal-label" style="font-size: 0.8rem; color: #06b6d4; font-weight: 600; margin-bottom: 4px;">🔑 Detected Account Portal</div>
+      <div id="portal-account-name" style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">Auto-fill login credentials if saved.</div>
+      <button id="autofill-creds-btn" class="btn btn-primary action-btn-full" style="background: #06b6d4; color: #000; border: none;">
+        🔒 Fill Portal Account
+      </button>
+    </div>
+
+    <!-- Application Plan Section (shown after form scan) -->
+    <div id="plan-section" class="glass card-box" style="padding: 14px; border-radius: 8px; display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <span class="label-small" style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">🧭 Execution Plan</span>
+        <button id="generate-plan-btn" class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem; font-weight: 600;">Generate Plan</button>
+      </div>
+      <div id="plan-steps-container" style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="font-size: 0.78rem; color: var(--text-secondary); text-align: center; padding: 8px 0;">Click \"Generate Plan\" to preview execution steps.</div>
+      </div>
+    </div>
+
+    <!-- Human Intervention / CAPTCHA Warning Banner -->
+    <div id="intervention-banner" class="glass card-box" style="display:none; padding: 12px; border-radius: 8px; border: 1px solid rgba(239,68,68,0.35); background: rgba(239,68,68,0.07);">
+      <div style="display: flex; align-items: flex-start; gap: 10px;">
+        <span style="font-size: 1.2rem; flex-shrink: 0;">🚨</span>
+        <div style="flex:1;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: #ef4444; margin-bottom: 3px;">Human Review Required</div>
+          <div id="intervention-reason" style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px;">A CAPTCHA or sensitive question has been detected.</div>
+          <button id="resume-automation-btn" class="btn btn-secondary" style="width: 100%; padding: 7px; font-size: 0.78rem; font-weight: 600;" disabled>
+            Resume Automation
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Job Application Actions -->
+    <div class="sp-actions">
+      <button id="autofill-btn" class="btn btn-primary action-btn-full" disabled>
+        ✨ Fill Application
+      </button>
+      <button id="gen-cover-letter-btn" class="btn btn-secondary action-btn-full" disabled style="background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(99,102,241,0.2)); border: 1px solid rgba(139,92,246,0.4); color: #c4b5fd;">
+        📝 Generate Cover Letter
+      </button>
+      <button id="sync-form-btn" class="btn btn-secondary action-btn-full" disabled>
+        📥 Sync Typed Answers to Profile
+      </button>
+    </div>
+
+    <!-- Cover Letter Modal Overlay -->
+    <div id="cover-letter-modal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); overflow-y:auto; padding:16px;">
+      <div style="background:#0f172a; border:1px solid rgba(139,92,246,0.4); border-radius:12px; max-width:520px; margin:auto; padding:20px; display:flex; flex-direction:column; gap:14px; box-shadow: 0 20px 60px rgba(0,0,0,0.6);">
+
+        <!-- Modal Header -->
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="font-size:1rem; font-weight:700; color:#c4b5fd;">📝 Cover Letter Generator</div>
+          <button id="cl-modal-close" style="background:none; border:none; color:#64748b; font-size:1.2rem; cursor:pointer; line-height:1;">✕</button>
+        </div>
+
+        <!-- Generating State -->
+        <div id="cl-generating-state" style="text-align:center; padding:24px 0; display:none;">
+          <div style="width:36px; height:36px; border:3px solid rgba(139,92,246,0.25); border-top-color:#8b5cf6; border-radius:50%; animation:sp-spin 0.8s linear infinite; margin:0 auto 12px;"></div>
+          <div style="color:#94a3b8; font-size:0.85rem;">Generating with Gemini AI...</div>
+          <div style="color:#64748b; font-size:0.75rem; margin-top:4px;">This may take up to 60 seconds due to rate limiting.</div>
+        </div>
+
+        <!-- Editor State -->
+        <div id="cl-editor-state" style="display:none; flex-direction:column; gap:12px;">
+          <!-- Save Name Input -->
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <label style="font-size:0.78rem; color:#94a3b8; font-weight:600;">Save Name</label>
+            <input type="text" id="cl-save-name" style="background:#1e293b; border:1px solid #334155; border-radius:6px; color:#f8fafc; padding:7px 10px; font-size:0.82rem; outline:none;" placeholder="e.g. Cover Letter – Acme Corp – Jul 2025">
+          </div>
+
+          <!-- Letter Text Editor -->
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <label style="font-size:0.78rem; color:#94a3b8; font-weight:600;">Generated Letter (Editable)</label>
+            <textarea id="cl-editor-textarea" rows="14" style="background:#0a0f1a; border:1px solid #334155; border-radius:6px; color:#e2e8f0; padding:12px; font-size:0.82rem; line-height:1.6; resize:vertical; outline:none; font-family: 'Segoe UI', sans-serif; min-height:260px;"></textarea>
+          </div>
+
+          <!-- Word / Char Count -->
+          <div style="font-size:0.72rem; color:#475569; text-align:right;" id="cl-char-count">0 characters</div>
+
+          <!-- Action Buttons -->
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <button id="cl-upload-btn" class="btn btn-primary" style="width:100%; padding:9px; font-size:0.85rem; font-weight:600;">
+              📥 Upload to Application Form
+            </button>
+            <div style="display:flex; gap:8px;">
+              <button id="cl-save-kb-btn" class="btn btn-secondary" style="flex:1; padding:8px; font-size:0.82rem; font-weight:600; border-color:rgba(16,185,129,0.4); color:#34d399;">
+                💾 Save to Knowledge Base
+              </button>
+              <button id="cl-download-btn" class="btn btn-secondary" style="flex:1; padding:8px; font-size:0.82rem; font-weight:600; border-color:rgba(99,102,241,0.4); color:#818cf8;">
+                ⬇ Download .txt
+              </button>
+            </div>
+          </div>
+
+          <!-- Status Message -->
+          <div id="cl-status-msg" style="font-size:0.78rem; font-weight:500; text-align:center; min-height:16px;"></div>
+        </div>
+
+        <!-- Error State -->
+        <div id="cl-error-state" style="display:none; text-align:center; padding:16px 0;">
+          <div style="font-size:1.5rem; margin-bottom:8px;">⚠️</div>
+          <div id="cl-error-text" style="color:#f87171; font-size:0.83rem;"></div>
+          <button id="cl-retry-btn" class="btn btn-secondary" style="margin-top:12px; padding:7px 20px; font-size:0.8rem;">Retry</button>
+        </div>
+
+      </div>
+    </div>
+
+    <style>
+      @keyframes sp-spin { to { transform: rotate(360deg); } }
+      #cover-letter-modal textarea:focus,
+      #cover-letter-modal input:focus {
+        border-color: rgba(139,92,246,0.6) !important;
+        box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+      }
+    </style>
+
+    <!-- Action Log Section -->
+    <div id="action-log-section" class="glass card-box" style="padding: 12px; border-radius: 8px; display: none;">
+      <span class="label-small" style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">📋 Action Log</span>
+      <div id="action-log-container" style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px; max-height: 200px; overflow-y: auto;"></div>
+    </div>
+
+    <!-- Auto-Navigate Panel (Phase 3: Multi-page orchestration) -->
+    <div id="autonav-panel" class="glass card-box" style="display:none; padding: 12px; border-radius: 8px; border: 1px solid rgba(34,197,94,0.25); background: rgba(34,197,94,0.05);">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <span class="label-small" style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">🧭 Auto-Navigate</span>
+        <label style="display:flex; align-items:center; gap:6px; font-size:0.75rem; color:var(--text-secondary); cursor:pointer;">
+          <input type="checkbox" id="autonav-toggle" style="accent-color: #22c55e; width:14px; height:14px;">
+          Enabled
+        </label>
+      </div>
+      <div id="autonav-status" style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 8px;">Detects and clicks "Next" / "Continue" buttons automatically after each fill.</div>
+      <div id="autonav-confirm-panel" style="display:none; border-top: 1px solid var(--border-color); padding-top: 10px; margin-top: 4px;">
+        <div id="autonav-next-label" style="font-size:0.8rem; font-weight:600; color:#22c55e; margin-bottom:8px;">Ready to advance to next page.</div>
+        <div style="display: flex; gap: 8px;">
+          <button id="autonav-proceed-btn" class="btn btn-primary" style="flex:1; padding: 7px; font-size: 0.78rem; background:#22c55e; border:none;">Proceed</button>
+          <button id="autonav-pause-btn" class="btn btn-secondary" style="flex:1; padding: 7px; font-size: 0.78rem;">Pause</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Resume Workspace Card -->
+    <div class="glass card-box" style="padding: 14px; border-radius: 8px;">
+      <span class="label-small" style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">📄 Reference Resume</span>
+      <div id="active-resume-card" class="text-center-secondary" style="padding: 10px 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div class="icon-resume-placeholder" style="margin-bottom: 6px; font-size: 1.5rem;">📄</div>
+        <div class="desc-small-text" style="font-size: 0.8rem; color: var(--text-secondary);">No reference resume uploaded yet.</div>
+      </div>
+      <div style="border-top: 1px solid var(--border-color); margin-top: 10px; padding-top: 10px;">
+        <input type="file" id="resume-workspace-upload" accept="application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="width: 100%; font-size: 0.75rem;">
+        <button id="resume-workspace-btn" class="btn btn-secondary" style="width: 100%; margin-top: 8px; padding: 6px; font-size: 0.8rem;" disabled>Upload Resume</button>
+        <div id="resume-upload-status" class="desc-small-text" style="text-align: center; margin-top: 4px; font-size: 0.7rem; color: var(--text-secondary);">Select a PDF or DOCX file.</div>
+      </div>
+    </div>
+
+    <!-- Navigation & Quick Settings -->
+    <div class="glass card-box" style="padding: 14px; border-radius: 8px; display: flex; flex-direction: column; gap: 10px;">
+      <button id="open-dashboard-btn" class="btn btn-secondary action-btn-full">
+        🏠 Open Dashboard / Home
+      </button>
+      
+      <div style="border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 6px;">
+        <span class="label-small" style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">🔑 Quick API Setup</span>
+        <div style="display: flex; gap: 8px;">
+          <input type="password" id="settings-gemini-key" placeholder="Enter Gemini API Key" style="flex-grow: 1; padding: 8px; font-size: 0.8rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 4px; color: #fff;">
+          <button id="save-settings-btn" class="btn btn-primary" style="padding: 8px 12px; font-size: 0.8rem; font-weight: 600;">Save</button>
+        </div>
+        <div style="margin-top: 8px; display: flex; flex-direction: column; gap: 4px;">
+          <span class="label-small" style="font-size: 0.7rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">📝 Custom Essay Template (use {QUESTION})</span>
+          <textarea id="settings-custom-essay-prompt" placeholder="e.g. Answer: &quot;{QUESTION}&quot;" style="width: 100%; min-height: 48px; padding: 6px 8px; font-size: 0.78rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 4px; color: #fff; resize: vertical; font-family: inherit; box-sizing: border-box; outline: none;"></textarea>
+        </div>
+        <div id="settings-status" class="settings-status-success" style="display: none; font-size: 0.75rem; color: var(--color-success); font-weight: 500;">Saved!</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="sidepanel.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+{
+  "timestamp": "2026-07-15T03:21:51.973Z",
+  "targetUrl": "http://localhost:5000/synthetic-ats/",
+  "totalTests": 26,
+  "passed": 26,
+  "failed": 0,
+  "successRate": "100%",
+  "results": [
+    {
+      "test": "Baseline Navigation: Page 1 → Page 2",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Conditional Visa: Hidden by default",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Conditional Visa: Visible after selecting Yes for sponsorship",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Conditional Visa: Hidden again after selecting No",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Duplicate Buttons: Both buttons present on review page",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Duplicate Buttons: Fake button does NOT trigger submission modal",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Duplicate Buttons: Real button triggers submission confirmation modal",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Work Auth: All 4 similar work authorization question groups present",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Work Auth: Each of the 4 groups can hold distinct values independently",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Misleading Labels: Two upload zones have distinct names (resume vs cover_letter_file)",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Misleading Labels: Upload zones have different semantic labels (Upload CV vs Attach Supporting Documents)",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Loading Delay: Loading overlay appears on page transition",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Loading Delay: Delay was respected (~2100ms observed)",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Loading Delay: Navigation continues after delay resolves",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "CAPTCHA Detection: CAPTCHA section visible when captcha=true",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "CAPTCHA Detection: CAPTCHA box has role=checkbox and aria-checked=false (detectable by agent)",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "CAPTCHA Detection: Page text contains 'I'm not a robot' phrase",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Full Flow: Page 1 complete and navigated to Page 2",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Full Flow: Page 2 complete and navigated to Page 3",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Full Flow: Page 3 complete and navigated to Page 4 (Review)",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Full Flow: Review page is populated with form data",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Full Flow: Application submitted and success page displayed",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Full Flow: Reference number generated (Ref: NOVA-2026-370173)",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Validation Recovery: Error banner shown on empty submit",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Validation Recovery: User stays on page 1 when validation fails",
+      "status": "PASS",
+      "error": null
+    },
+    {
+      "test": "Validation Recovery: Navigation succeeds after fixing errors",
+      "status": "PASS",
+      "error": null
+    }
+  ]
+}

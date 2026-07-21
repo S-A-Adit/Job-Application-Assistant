@@ -1,0 +1,526 @@
+/* sidepanel.css - Styles for the AI Job Agent Extension Side Panel */
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+.panel-header {
+  padding: 24px 20px 12px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.logo-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  background: linear-gradient(135deg, #fff 30%, var(--text-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  font-size: 0.9rem;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-field label {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.profile-field span {
+  color: #fff;
+}
+
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(99, 102, 241, 0.08);
+  color: var(--accent-primary);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+.history-card {
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: rgba(17, 19, 28, 0.4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  transition: var(--transition-fast);
+}
+
+.history-card:hover {
+  border-color: rgba(99, 102, 241, 0.2);
+  background: rgba(17, 19, 28, 0.7);
+}
+
+/* Merge Diff List Layout */
+.diff-item {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+  background: var(--bg-secondary);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 10px;
+}
+
+.diff-conflict {
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+.diff-new {
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.diff-badge {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.diff-badge-conflict {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-warning);
+}
+
+.diff-badge-new {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--color-success);
+}
+
+/* Class utilities replacing inline style properties */
+.sidebar-col {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.input-width {
+  width: 100%;
+}
+
+.text-center-secondary {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.border-top-mgmt {
+  border-top: 1px solid var(--border-color);
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heading-sm {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.main-profile-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.glass-padding {
+  padding: 24px;
+}
+
+.qa-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.qa-empty-msg {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.tracker-col {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.list-group-margin {
+  margin-top: 10px;
+}
+
+.tracker-empty-msg {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-muted);
+}
+
+.settings-box {
+  padding: 24px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.settings-label-sub {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.form-v-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-field-v-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label-semibold {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.settings-status-success {
+  font-size: 0.85rem;
+  color: var(--color-success);
+  display: none;
+}
+
+.modal-header-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.textarea-modal {
+  flex-grow: 1;
+  height: 300px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-success);
+  background-color: #07080c;
+  resize: none;
+}
+
+.flex-grow-scroll {
+  overflow-y: auto;
+}
+
+.flex-column-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.modal-overlay-custom {
+  max-width: 850px;
+  height: 80vh;
+}
+
+.input-flex-v-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.input-label-description {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.textarea-notes {
+  height: 80px;
+}
+
+.dropdown-width {
+  width: 130px;
+  font-size: 0.8rem;
+  padding: 6px 10px;
+}
+
+.action-buttons-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.history-card-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-header-alignment {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-tracker-badge {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #06b6d4;
+}
+
+.active-resume-card-box {
+  border-top: 1px solid var(--border-color);
+  padding-top: 16px;
+  font-size: 0.85rem;
+  display: none;
+}
+
+.active-resume-card-name {
+  word-break: break-all;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent-primary);
+}
+
+/* Template custom markup rules */
+.role-company-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.role-title-text {
+  font-size: 1.05rem;
+  color: #fff;
+}
+
+.at-text {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.company-title-text {
+  color: var(--accent-secondary);
+  font-size: 0.95rem;
+}
+
+.meta-info-row {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.job-link-icon {
+  color: var(--accent-primary);
+  text-decoration: none;
+}
+
+.notes-row {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+.action-buttons-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-status-select {
+  width: 130px;
+  font-size: 0.8rem;
+  padding: 6px 10px;
+}
+
+.btn-delete-small {
+  padding: 6px 10px;
+  font-size: 0.75rem;
+}
+
+.tag-cert {
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.08);
+  color: var(--color-success);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.education-item {
+  border-left: 2px solid var(--accent-primary);
+  padding-left: 12px;
+}
+
+.school-name-text {
+  font-weight: 600;
+  color: #fff;
+}
+
+.degree-meta-text {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.experience-item {
+  border-left: 2px solid var(--accent-secondary);
+  padding-left: 12px;
+}
+
+.qa-item-box {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.question-text-style {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.answer-text-style {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+/* Modal Merge Comparative classes */
+.diff-section-header {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-bottom: 12px;
+}
+
+.diff-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.diff-checkbox {
+  width: 16px;
+  height: 16px;
+}
+
+.diff-item-key {
+  text-transform: capitalize;
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.diff-badge-wrapper {
+  margin-top: 2px;
+}
+
+.diff-old-value {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+.diff-new-value {
+  font-size: 0.85rem;
+  color: var(--color-success);
+  font-weight: 600;
+}

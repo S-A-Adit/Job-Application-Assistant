@@ -1,0 +1,14 @@
+{
+  "name": "job-application-assistant",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Autonomous Job Application Assistant with Chrome MV3 extension and Express backend",
+  "workspaces": [
+    "backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=backend",
+    "start": "npm run start --workspace=backend",
+    "test": "npm run test --workspace=backend"
+  }
+}

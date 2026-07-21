@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Job Agent - Application Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="tracker.css">
+  <link rel="icon" type="image/png" href="icon.png">
+</head>
+<body>
+  <div class="header-bar">
+    <div class="logo-section">
+      <img src="icon.png" class="logo-icon" alt="Logo">
+      <div class="title-h">AI Job Agent Tracker</div>
+    </div>
+    <div class="tracker-live-info">
+      <span class="tracker-live-indicator"></span>
+      <span>Live Application Auto-Tracker</span>
+    </div>
+  </div>
+
+  <div class="workspace-layout">
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar-menu">
+      <a href="dashboard.html" class="menu-btn">👤 Master Profile</a>
+      <a href="dashboard.html#resume" class="menu-btn">📄 Resume Workspace</a>
+      <a href="dashboard.html#letters" class="menu-btn">📝 Cover Letters</a>
+      <a href="tracker.html" class="menu-btn active">📊 Application Tracker</a>
+      <a href="dashboard.html#settings" class="menu-btn">⚙️ Settings & Backup</a>
+    </div>
+
+    <!-- RIGHT CONTENT AREA -->
+    <div class="content-area">
+      <div class="glass tracker-container">
+        <div class="flex-between">
+          <div>
+            <h2 class="tracker-title-large">ATS Job Application Tracker</h2>
+            <p class="tracker-desc-text">Applications are tracked here automatically upon form submission. Update statuses as they change.</p>
+          </div>
+          <button id="add-manual-app-btn" class="btn btn-primary">➕ Add Tracked Application</button>
+        </div>
+
+        <!-- Metric KPI Summary Cards -->
+        <div class="analytics-grid">
+          <div class="glass stat-card total-border">
+            <div id="metric-total" class="stat-val">0</div>
+            <div class="stat-label">Total Jobs</div>
+          </div>
+          <div class="glass stat-card inprogress-border">
+            <div id="metric-in-progress" class="stat-val">0</div>
+            <div class="stat-label">In Progress</div>
+          </div>
+          <div class="glass stat-card applied-border">
+            <div id="metric-applied" class="stat-val">0</div>
+            <div class="stat-label">Applied</div>
+          </div>
+          <div class="glass stat-card interviews-border">
+            <div id="metric-interviews" class="stat-val">0</div>
+            <div class="stat-label">Interviews</div>
+          </div>
+          <div class="glass stat-card rejections-border">
+            <div id="metric-rejections" class="stat-val">0</div>
+            <div class="stat-label">Rejections</div>
+          </div>
+        </div>
+
+        <!-- Filters & Search -->
+        <div class="filter-bar">
+          <div class="flex-grow-1">
+            <input type="text" id="tracker-search" placeholder="🔍 Search by company name or role...">
+          </div>
+          <div class="filter-dropdown-wrapper">
+            <select id="tracker-status-filter">
+              <option value="ALL">All Statuses</option>
+              <option value="Not Applied">Not Applied</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Applied">Applied</option>
+              <option value="Interviewing">Interviewing</option>
+              <option value="Offer">Offer</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Applications Table -->
+        <div class="table-scroll-container">
+          <table class="ats-table">
+            <thead>
+              <tr>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Date Tracked</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tracker-table-body">
+              <tr>
+                <td colspan="6" class="table-empty-row">No tracked applications found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANUAL APPLICATION / EDIT MODAL -->
+  <div id="app-modal" class="modal-overlay">
+    <div class="glass glass-glow modal-container app-modal-size">
+      <div class="modal-header">
+        <h3 class="modal-title-text" id="app-modal-title">Add Tracked Application</h3>
+        <button class="close-btn" id="close-app-modal">&times;</button>
+      </div>
+      <div class="modal-body input-container-vertical">
+        <input type="hidden" id="manual-app-id">
+        <div class="field-item-vertical">
+          <label class="label-desc-text">Company Name</label>
+          <input type="text" id="manual-company" placeholder="e.g. Google">
+        </div>
+        <div class="field-item-vertical">
+          <label class="label-desc-text">Role Title</label>
+          <input type="text" id="manual-role" placeholder="e.g. Software Engineer">
+        </div>
+        <div class="field-item-vertical">
+          <label class="label-desc-text">Job URL</label>
+          <input type="text" id="manual-url" placeholder="https://...">
+        </div>
+        <div class="field-item-vertical">
+          <label class="label-desc-text">Status</label>
+          <select id="manual-status">
+            <option value="Not Applied">Not Applied</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Applied">Applied</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Offer">Offer</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="field-item-vertical">
+          <label class="label-desc-text">Notes</label>
+          <textarea id="manual-notes" placeholder="Any application details..." class="textarea-notes-box"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancel-app-btn">Cancel</button>
+        <button class="btn btn-primary" id="save-app-btn">Track Job</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="tracker.js" type="module"></script>
+</body>
+</html>

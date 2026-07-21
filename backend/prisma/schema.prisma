@@ -1,0 +1,115 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Resume {
+  id           String        @id @default(uuid())
+  versionName  String
+  filePath     String
+  parsedJson   String // Stringified JSON matching the structured resume schema
+  base64Data   String // Base64 data to allow document downloads
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  applications Application[]
+}
+
+model Application {
+  id              String             @id @default(uuid())
+  company         String
+  role            String
+  url             String             @unique
+  status          String // "Not Applied", "In Progress", "Applied", "Interview", "Rejected", "Offer"
+  matchScore      Int?
+  matchedSkills   String             @default("[]") // JSON Array string
+  missingSkills   String             @default("[]") // JSON Array string
+  recommendations String? // Markdown or text recommendations
+  notes           String?
+  dateApplied     DateTime?
+  resumeId        String?
+  resume          Resume?            @relation(fields: [resumeId], references: [id], onDelete: SetNull)
+  drafts          ApplicationDraft[]
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+}
+
+model ApplicationDraft {
+  id              String      @id @default(uuid())
+  applicationId   String
+  application     Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  question        String
+  generatedAnswer String
+  userAnswer      String
+  isApproved      Boolean     @default(false)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model CoverLetter {
+  id        String   @id @default(uuid())
+  name      String
+  text      String
+  analysis  String?  // Stringified JSON matching the style analysis
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id        String   @id @default("singleton")
+  dataJson  String
+  updatedAt DateTime @updatedAt
+}
+
+model Settings {
+  id        String   @id @default("singleton")
+  dataJson  String
+  updatedAt DateTime @updatedAt
+}
+
+model LearnedMapping {
+  id             String   @id @default(uuid())
+  fieldLabel     String
+  fieldName      String
+  fieldType      String
+  incorrectValue String?
+  correctValue   String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model ReplaySession {
+  id            String   @id @default(uuid())
+  url           String
+  company       String
+  role          String
+  domSnapshot   String // Stringified HTML content of the form page
+  actionHistory String // Stringified JSON array of actions attempted
+  consoleLogs   String // Stringified JSON array of captured console outputs
+  formState     String // Stringified JSON of input values filled
+  createdAt     DateTime @default(now())
+}
+
+model BenchmarkSession {
+  id                String   @id @default(uuid())
+  platform          String   // "synthetic", "greenhouse", "workday", "lever", etc.
+  jobUrl            String   @default("")
+  completionRate    Float    @default(0) // % of form steps successfully completed (0-1)
+  fieldAccuracy     Float    @default(0) // % of filled fields with correct values (0-1)
+  navigationAccuracy Float   @default(0) // % of correct button/nav actions (0-1)
+  recoveryRate      Float    @default(0) // % of errors successfully recovered from (0-1)
+  hallucinations    Int      @default(0) // Count of invented/hallucinated actions
+  userInterventions Int      @default(0) // Times user had to manually intervene
+  avgConfidence     Float    @default(0) // Average LLM confidence across all field mappings (0-1)
+  semanticAccuracy  Float    @default(0) // % of correctly interpreted question intents (0-1)
+  totalTimeMs       Int      @default(0) // Total time from scan to fill completion (ms)
+  passedFields      Int      @default(0) // Fields filled successfully
+  failedFields      Int      @default(0) // Fields that failed or were skipped
+  totalFields       Int      @default(0) // Total detected fields
+  rawLog            String   @default("[]") // Stringified JSON of step-by-step action log
+  notes             String   @default("")  // Human notes about this run
+  createdAt         DateTime @default(now())
+}

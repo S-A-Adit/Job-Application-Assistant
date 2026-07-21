@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Job Agent - Controller</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="sidepanel.css">
+  <link rel="icon" type="image/png" href="icon.png">
+  <style>
+    /* Styling adjustments inside popup window */
+    .sp-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 16px;
+      background-color: var(--bg-primary);
+      min-height: 100vh;
+    }
+    .sp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 4px;
+    }
+    .header-icon-btn {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: color 0.2s, transform 0.2s;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .header-icon-btn:hover {
+      color: #fff;
+      transform: scale(1.1);
+    }
+    .close-btn-highlight:hover {
+      color: #ef4444;
+    }
+    .detected-job-text {
+      font-weight: 600;
+      color: #fff;
+      display: none;
+      margin-top: 4px;
+      font-size: 0.9rem;
+    }
+    .sp-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .action-btn-full {
+      width: 100%;
+      padding: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="sp-container">
+    <div class="sp-header">
+      <div class="logo-container" style="display: flex; align-items: center; gap: 10px;">
+        <img src="icon.png" class="logo-img" alt="Logo" style="width: 28px; height: 28px; border-radius: 6px;">
+        <div class="logo-title" style="font-size: 1.25rem; font-weight: 700; color: #fff;">AI Job Agent</div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <button id="popup-home-btn" class="header-icon-btn" title="Open Dashboard (Home)">🏠</button>
+        <button id="close-popup-btn" class="header-icon-btn close-btn-highlight" title="Close Controller">✕</button>
+      </div>
+    </div>
+
+    <!-- Active Page Status Card -->
+    <div id="status-box" class="glass card-box" style="padding: 12px; border-radius: 8px;">
+      <span class="label-small" style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">Active Page Status</span>
+      <div id="status-message" class="status-msg" style="margin-top: 4px; font-size: 0.85rem; color: var(--text-secondary);">Scanning page...</div>
+      <div id="detected-job-info" class="detected-job-text"></div>
+    </div>
+
+    <!-- Portal Sign-in Card -->
+    <div id="portal-card" class="glass card-box" style="background: rgba(6, 182, 212, 0.04); border: 1px solid rgba(6, 182, 212, 0.15); padding: 12px; border-radius: 8px; display: none;">
+      <div class="portal-label" style="font-size: 0.8rem; color: #06b6d4; font-weight: 600; margin-bottom: 4px;">🔑 Detected Account Portal</div>
+      <div id="portal-account-name" style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px;">Auto-fill login credentials if saved.</div>
+      <button id="autofill-creds-btn" class="btn btn-primary action-btn-full" style="background: #06b6d4; color: #000; border: none;">
+        🔒 Fill Portal Account
+      </button>
+    </div>
+
+    <!-- Job Application Actions -->
+    <div class="sp-actions">
+      <button id="autofill-btn" class="btn btn-primary action-btn-full" disabled>
+        ✨ Fill Application
+      </button>
+      <button id="sync-form-btn" class="btn btn-secondary action-btn-full" disabled>
+        📥 Sync Typed Answers to Profile
+      </button>
+    </div>
+
+    <!-- Active Resume Workspace Card -->
+    <div class="glass card-box" style="padding: 14px; border-radius: 8px;">
+      <span class="label-small" style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">📄 Reference Resume</span>
+      <div id="active-resume-card" class="text-center-secondary" style="padding: 10px 0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div class="icon-resume-placeholder" style="margin-bottom: 6px; font-size: 1.5rem;">📄</div>
+        <div class="desc-small-text" style="font-size: 0.8rem; color: var(--text-secondary);">No reference resume uploaded yet.</div>
+      </div>
+      <div style="border-top: 1px solid var(--border-color); margin-top: 10px; padding-top: 10px;">
+        <input type="file" id="resume-workspace-upload" accept="application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="width: 100%; font-size: 0.75rem;">
+        <button id="resume-workspace-btn" class="btn btn-secondary" style="width: 100%; margin-top: 8px; padding: 6px; font-size: 0.8rem;" disabled>Upload Resume</button>
+        <div id="resume-upload-status" class="desc-small-text" style="text-align: center; margin-top: 4px; font-size: 0.7rem; color: var(--text-secondary);">Select a PDF or DOCX file.</div>
+      </div>
+    </div>
+
+    <!-- Navigation & Quick Settings -->
+    <div class="glass card-box" style="padding: 14px; border-radius: 8px; display: flex; flex-direction: column; gap: 10px;">
+      <button id="open-dashboard-btn" class="btn btn-secondary action-btn-full">
+        🏠 Open Dashboard / Home
+      </button>
+      
+      <div style="border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 6px;">
+        <span class="label-small" style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 500;">🔑 Quick API Setup</span>
+        <div style="display: flex; gap: 8px;">
+          <input type="password" id="settings-gemini-key" placeholder="Enter Gemini API Key" style="flex-grow: 1; padding: 8px; font-size: 0.8rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 4px; color: #fff;">
+          <button id="save-settings-btn" class="btn btn-primary" style="padding: 8px 12px; font-size: 0.8rem; font-weight: 600;">Save</button>
+        </div>
+        <div id="settings-status" class="settings-status-success" style="display: none; font-size: 0.75rem; color: var(--color-success); font-weight: 500;">Saved!</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

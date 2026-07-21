@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock Job Portal - Application Form</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --success: #10b981;
+      --error: #ef4444;
+      --border: #334155;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      width: 100%;
+      max-width: 800px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #a5b4fc, var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    fieldset {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+      background-color: rgba(15, 23, 42, 0.3);
+    }
+
+    legend {
+      padding: 0 10px;
+      font-weight: 600;
+      color: #a5b4fc;
+      font-size: 0.95rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    label {
+      font-weight: 500;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    input[type="date"],
+    input[type="number"],
+    select,
+    textarea {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 16px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .custom-select-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .custom-select-trigger {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .custom-select-trigger:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    .custom-options {
+      position: absolute;
+      top: 105%;
+      left: 0;
+      right: 0;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      z-index: 100;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    .custom-option {
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+
+    .custom-option:hover {
+      background-color: var(--accent);
+      color: white;
+    }
+
+    .radio-option, .checkbox-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.88rem;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    input[type="file"] {
+      border: 1px dashed var(--border);
+      padding: 16px;
+      border-radius: 6px;
+      background-color: var(--bg-primary);
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .error-input {
+      border-color: var(--error) !important;
+      background-color: rgba(239, 68, 68, 0.05);
+    }
+
+    .error-msg {
+      color: var(--error);
+      font-size: 0.8rem;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .btn-submit {
+      background-color: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background-color 0.2s;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      background-color: var(--accent-hover);
+    }
+
+    /* Test diagnostic output panel */
+    .diagnostic-panel {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      background-color: rgba(15, 23, 42, 0.6);
+    }
+
+    .diagnostic-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .status-idle { background-color: var(--border); color: var(--text-primary); }
+    .status-success { background-color: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); }
+    .status-error { background-color: rgba(239, 68, 68, 0.2); color: var(--error); border: 1px solid var(--error); }
+
+    .failures-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--error);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Simulated dynamic page loading spinner -->
+  <div id="loading-spinner" style="font-size: 1.5rem; text-align: center; color: var(--accent); margin: auto;">
+    <div class="spinner" style="border: 4px solid rgba(255,255,255,0.1); width: 50px; height: 50px; border-radius: 50%; border-left-color: var(--accent); animation: spin 1s linear infinite; margin: 0 auto 16px auto;"></div>
+    Loading job application form...
+  </div>
+
+  <style>
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+
+  <!-- Login/Signup screen -->
+  <div class="container" id="auth-container" style="display: none;">
+    <h1 id="auth-title">Create your Acme Corp Careers Account</h1>
+    <p class="subtitle" id="auth-subtitle">Sign up to apply for the Senior AI Engineer role</p>
+    
+    <div style="display: flex; gap: 16px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+      <button type="button" id="tab-signup" style="background: none; border: none; color: var(--accent); font-weight: 600; cursor: pointer; font-size: 0.95rem; border-bottom: 2px solid var(--accent); padding-bottom: 4px;">Sign Up</button>
+      <button type="button" id="tab-login" style="background: none; border: none; color: var(--text-secondary); font-weight: 500; cursor: pointer; font-size: 0.95rem; padding-bottom: 4px;">Log In</button>
+    </div>
+
+    <form id="auth-form" novalidate>
+      <div class="form-group">
+        <label for="auth-email">Email Address</label>
+        <input type="email" id="auth-email" name="email" placeholder="you@example.com" required>
+        <span class="error-msg" id="err-auth-email">Valid email is required.</span>
+      </div>
+      <div class="form-group">
+        <label for="auth-password">Password</label>
+        <input type="password" id="auth-password" name="password" placeholder="••••••••" required>
+        <span class="error-msg" id="err-auth-password">Password is required.</span>
+      </div>
+      <div class="form-group" id="confirm-password-group">
+        <label for="auth-confirm-password">Confirm Password</label>
+        <input type="password" id="auth-confirm-password" name="confirm_password" placeholder="••••••••" required>
+        <span class="error-msg" id="err-auth-confirm-password">Passwords do not match.</span>
+      </div>
+      <button type="submit" class="btn-submit" id="auth-submit-btn">Create Account</button>
+    </form>
+  </div>
+
+  <div class="container" id="app-container" style="display: none;">
+    <h1>Acme Corp Careers</h1>
+    <p class="subtitle">Mock Job Application - Senior AI Engineer</p>
+
+    <!-- Job Description Block -->
+    <div id="job-description" style="background-color: rgba(99,102,241,0.06); border: 1px solid rgba(99,102,241,0.2); border-radius: 8px; padding: 16px; margin-bottom: 24px; font-size: 0.88rem; color: #94a3b8; line-height: 1.6;">
+      <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 8px; font-size: 0.95rem;">📋 Job Description</div>
+      <strong style="color: #e2e8f0;">Senior AI Engineer – Acme Corp (New York, NY / Remote)</strong>
+      <p style="margin: 8px 0 0 0;">
+        Acme Corp is looking for a Senior AI Engineer to join our applied AI team. You will design, build, and deploy production-grade AI systems that power our core product offerings.
+        You will collaborate closely with product, data science, and engineering teams to bring research concepts to reliable, scalable production deployments.
+      </p>
+      <p style="margin: 8px 0 0 0;"><strong style="color: #cbd5e1;">Responsibilities:</strong></p>
+      <ul style="margin: 4px 0 0 16px; padding: 0;">
+        <li>Design and implement ML pipelines and LLM-based features in Python and JavaScript.</li>
+        <li>Build RESTful APIs and backend services to serve AI models at scale.</li>
+        <li>Own reliability, monitoring, and observability of deployed AI systems.</li>
+      </ul>
+      <p style="margin: 8px 0 0 0;"><strong style="color: #cbd5e1;">Requirements:</strong></p>
+      <ul style="margin: 4px 0 0 16px; padding: 0;">
+        <li>3+ years of software engineering experience (Python, Node.js, or equivalent).</li>
+        <li>Experience with LLMs (OpenAI, Gemini, Claude) and RAG architectures.</li>
+      </ul>
+      <p style="margin: 8px 0 0 0;"><strong style="color: #cbd5e1;">Compensation:</strong> $140,000–$180,000 / year + equity. Remote-friendly.</p>
+    </div>
+
+    <form id="job-app-form" novalidate>
+      
+      <!-- 1. Personal Information Fields -->
+      <fieldset>
+        <legend>1. Personal Information</legend>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" name="first_name" placeholder="First name" data-expected-ai-intent="first_name">
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="last_name" placeholder="Last name" data-expected-ai-intent="last_name">
+          </div>
+          <div class="form-group">
+            <label for="preferred-name">Preferred Name</label>
+            <input type="text" id="preferred-name" name="preferred_name" placeholder="Preferred name" data-expected-ai-intent="preferred_name">
+          </div>
+          <div class="form-group">
+            <label for="full-name">Full Legal Name</label>
+            <input type="text" id="full-name" name="full_name" placeholder="First and last name" data-expected-ai-intent="full_name">
+            <span class="error-msg" id="err-full-name">Full Legal Name is required.</span>
+          </div>
+          <div class="form-group">
+            <label for="email-address">Email Address</label>
+            <input type="email" id="email-address" name="email_address" placeholder="you@example.com" data-expected-ai-intent="email">
+            <span class="error-msg" id="err-email-address">Valid email address is required.</span>
+          </div>
+          <div class="form-group">
+            <label for="phone-number">Phone Number</label>
+            <input type="text" id="phone-number" name="phone_number" placeholder="(555) 000-0000" data-expected-ai-intent="phone">
+          </div>
+          <div class="form-group">
+            <label for="linkedin-url">LinkedIn URL</label>
+            <input type="url" id="linkedin-url" name="linkedin_url" placeholder="https://linkedin.com/in/..." data-expected-ai-intent="linkedin">
+          </div>
+          <div class="form-group">
+            <label for="github-url">GitHub URL</label>
+            <input type="url" id="github-url" name="github_url" placeholder="https://github.com/..." data-expected-ai-intent="github">
+          </div>
+          <div class="form-group full-width">
+            <label for="portfolio-website">Portfolio Website</label>
+            <input type="url" id="portfolio-website" name="portfolio_url" placeholder="https://..." data-expected-ai-intent="portfolio">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Address Fields -->
+      <fieldset>
+        <legend>Address Information</legend>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="street-address">Street Address</label>
+            <input type="text" id="street-address" name="street_address" placeholder="123 Main St" data-expected-ai-intent="street_address">
+          </div>
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city" placeholder="New York" data-expected-ai-intent="city">
+          </div>
+          <div class="form-group">
+            <label for="state">State/Province</label>
+            <input type="text" id="state" name="state" placeholder="NY" data-expected-ai-intent="state">
+          </div>
+          <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" placeholder="United States" data-expected-ai-intent="country">
+          </div>
+          <div class="form-group">
+            <label for="zip-code">ZIP/Postal Code</label>
+            <input type="text" id="zip-code" name="zip_code" placeholder="10001" data-expected-ai-intent="postal_code">
+          </div>
+          <div class="form-group full-width">
+            <label>Are you willing to relocate?</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" id="relocate-yes" name="relocation" value="Yes" data-expected-ai-intent="willing_to_relocate">
+                Yes
+              </label>
+              <label class="radio-option">
+                <input type="radio" id="relocate-no" name="relocation" value="No" data-expected-ai-intent="willing_to_relocate">
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 2. Resume / Document Upload Fields -->
+      <fieldset>
+        <legend>2. Resume & Documents</legend>
+        <div class="form-group">
+          <label for="resume-upload">Resume/CV Document</label>
+          <input type="file" id="resume-upload" name="resume_file" accept=".pdf,.docx" data-expected-ai-intent="resume">
+          <span class="error-msg" id="err-resume-upload">Please upload your resume.</span>
+        </div>
+      </fieldset>
+
+      <!-- 3. Work Authorization Fields -->
+      <fieldset>
+        <legend>3. Work Authorization</legend>
+        <div class="form-group">
+          <label>Are you authorized to work in the US?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" id="authorized-yes" name="work_auth" value="Yes" data-expected-ai-intent="authorized_to_work">
+              Yes
+            </label>
+            <label class="radio-option">
+              <input type="radio" id="authorized-no" name="work_auth" value="No" data-expected-ai-intent="authorized_to_work">
+              No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Do you now or in the future require visa sponsorship?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" id="sponsorship-yes" name="visa_sponsorship" value="Yes" data-expected-ai-intent="sponsorship_required">
+              Yes, I require sponsorship
+            </label>
+            <label class="radio-option">
+              <input type="radio" id="sponsorship-no" name="visa_sponsorship" value="No" data-expected-ai-intent="sponsorship_required">
+              No, I do not require sponsorship
+            </label>
+          </div>
+          <span class="error-msg" id="err-visa-sponsorship">Please select your sponsorship requirement status.</span>
+        </div>
+        <div class="form-group">
+          <label for="visa-status">Visa Status / Type</label>
+          <select id="visa-status" name="visa_status" data-expected-ai-intent="visa_status">
+            <option value="">-- Select Visa Type --</option>
+            <option value="citizen">U.S. Citizen / Permanent Resident</option>
+            <option value="opt">F-1 OPT</option>
+            <option value="h1b">H-1B</option>
+            <option value="other">Other visa holder</option>
+          </select>
+        </div>
+      </fieldset>
+
+      <!-- 4. Education Fields -->
+      <fieldset>
+        <legend>4. Education History</legend>
+        <div class="form-grid">
+          <div class="form-group full-width">
+            <label for="school-name">School Name</label>
+            <input type="text" id="school-name" name="school_name" placeholder="University/College Name" data-expected-ai-intent="school">
+          </div>
+          <div class="form-group">
+            <label for="degree-type">Degree Type</label>
+            <select id="degree-type" name="degree_type" data-expected-ai-intent="degree_type">
+              <option value="">-- Choose Type --</option>
+              <option value="Bachelor">Bachelor's</option>
+              <option value="Master">Master's</option>
+              <option value="PhD">PhD</option>
+              <option value="Associate">Associate's</option>
+              <option value="HighSchool">High School</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="degree-major">Major</label>
+            <input type="text" id="degree-major" name="degree_major" placeholder="Computer Science" data-expected-ai-intent="major">
+          </div>
+          <div class="form-group">
+            <label for="gpa">GPA</label>
+            <input type="text" id="gpa" name="degree_gpa" placeholder="3.8" data-expected-ai-intent="gpa">
+          </div>
+          <div class="form-group">
+            <label for="graduation-date">Graduation Date</label>
+            <input type="text" id="graduation-date" name="graduation_date" placeholder="May 2024" data-expected-ai-intent="graduation_date">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 5. Employment History -->
+      <fieldset>
+        <legend>5. Employment History</legend>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="prev-company">Most Recent Company</label>
+            <input type="text" id="prev-company" name="previous_company" placeholder="Acme Inc" data-expected-ai-intent="company">
+          </div>
+          <div class="form-group">
+            <label for="prev-title">Most Recent Job Title</label>
+            <input type="text" id="prev-title" name="previous_title" placeholder="Software Engineer" data-expected-ai-intent="job_title">
+          </div>
+          <div class="form-group full-width">
+            <label for="prev-responsibilities">Describe your core responsibilities and achievements</label>
+            <textarea id="prev-responsibilities" name="previous_responsibilities" placeholder="Developed full stack systems..." data-expected-ai-intent="experience_description"></textarea>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 6. Skills Fields -->
+      <fieldset>
+        <legend>6. Technical Skills</legend>
+        <div class="form-group">
+          <label for="skills-list">Programming Languages & Technologies (Comma-separated)</label>
+          <input type="text" id="skills-list" name="skills_list" placeholder="Python, JavaScript, React, AWS" data-expected-ai-intent="skills">
+        </div>
+        <div class="form-group">
+          <label>Check any technologies you have experience with:</label>
+          <div class="checkbox-grid">
+            <label class="checkbox-option">
+              <input type="checkbox" id="skill-python" name="has_python" value="python" data-expected-ai-intent="skills"> Python
+            </label>
+            <label class="checkbox-option">
+              <input type="checkbox" id="skill-react" name="has_react" value="react" data-expected-ai-intent="skills"> React
+            </label>
+            <label class="checkbox-option">
+              <input type="checkbox" id="skill-aws" name="has_aws" value="aws" data-expected-ai-intent="skills"> AWS
+            </label>
+            <label class="checkbox-option">
+              <input type="checkbox" id="skill-docker" name="has_docker" value="docker" data-expected-ai-intent="skills"> Docker
+            </label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 7. Job Preference Fields -->
+      <fieldset>
+        <legend>7. Job Preferences</legend>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="js-experience">Years of JavaScript Experience</label>
+            <select id="js-experience" name="js_experience" data-expected-ai-intent="js_experience">
+              <option value="">-- Choose Experience Level --</option>
+              <option value="less-than-1">Less than 1 year</option>
+              <option value="1-2-years">1-2 years</option>
+              <option value="3-5-years">3-5 years</option>
+              <option value="5-plus-years">5+ years</option>
+            </select>
+            <span class="error-msg" id="err-js-experience">Please select your experience level.</span>
+          </div>
+          <div class="form-group">
+            <label for="custom-role-combobox">Preferred AI Subfield (Custom Picklist)</label>
+            <div class="custom-select-wrapper">
+              <div id="custom-role-combobox" role="combobox" aria-expanded="false" class="custom-select-trigger" tabindex="0" data-expected-ai-intent="preferred_subfield">
+                -- Select Subfield --
+              </div>
+              <div id="custom-options-list" class="custom-options" style="display: none;">
+                <div role="option" class="custom-option" data-value="nlp">Natural Language Processing (NLP)</div>
+                <div role="option" class="custom-option" data-value="cv">Computer Vision</div>
+                <div role="option" class="custom-option" data-value="rl">Reinforcement Learning</div>
+                <div role="option" class="custom-option" data-value="systems">AI Systems/Infrastructure</div>
+              </div>
+            </div>
+            <input type="hidden" id="custom-role-input" name="preferred_subfield">
+            <span class="error-msg" id="err-custom-role">Please select a preferred subfield.</span>
+          </div>
+          <div class="form-group full-width">
+            <label for="location-autocomplete">Preferred Location (Autocomplete Search)</label>
+            <div class="custom-select-wrapper">
+              <input type="text" id="location-autocomplete" role="combobox" aria-expanded="false" class="custom-select-trigger" placeholder="Type city or country..." data-expected-ai-intent="preferred_location">
+              <div id="location-options-list" class="custom-options" style="display: none;"></div>
+            </div>
+            <input type="hidden" id="location-input" name="preferred_location">
+            <span class="error-msg" id="err-location">Please select a preferred location.</span>
+          </div>
+          <div class="form-group">
+            <label for="desired-employment-type">Employment Type</label>
+            <select id="desired-employment-type" name="employment_type" data-expected-ai-intent="employment_type">
+              <option value="">-- Choose Type --</option>
+              <option value="full-time">Full-time</option>
+              <option value="part-time">Part-time</option>
+              <option value="contract">Contract</option>
+              <option value="internship">Internship</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Work Arrangement</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" id="arrangement-remote" name="work_arrangement" value="remote" data-expected-ai-intent="work_arrangement"> Remote
+              </label>
+              <label class="radio-option">
+                <input type="radio" id="arrangement-hybrid" name="work_arrangement" value="hybrid" data-expected-ai-intent="work_arrangement"> Hybrid
+              </label>
+              <label class="radio-option">
+                <input type="radio" id="arrangement-onsite" name="work_arrangement" value="onsite" data-expected-ai-intent="work_arrangement"> On-site
+              </label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 8. Compensation Fields -->
+      <fieldset>
+        <legend>8. Compensation Expectations</legend>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="desired-salary">Desired Annual Salary ($ USD)</label>
+            <input type="text" id="desired-salary" name="desired_salary" placeholder="e.g. 120,000" data-expected-ai-intent="salary">
+            <span class="error-msg" id="err-desired-salary">Please provide salary details.</span>
+          </div>
+          <div class="form-group">
+            <label for="salary-range">Expected Compensation Range</label>
+            <select id="salary-range" name="salary_range" data-expected-ai-intent="salary_range">
+              <option value="">-- Select Expected Range --</option>
+              <option value="50-70">50k-70k</option>
+              <option value="70-90">70k-90k</option>
+              <option value="90-plus">90k+</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 9. Screening Questions -->
+      <fieldset>
+        <legend>9. Screening Questions</legend>
+        <div class="form-group">
+          <label>Do you have professional experience with Python?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" id="python-yes" name="python_experience" value="Yes" data-expected-ai-intent="python_experience"> Yes
+            </label>
+            <label class="radio-option">
+              <input type="radio" id="python-no" name="python_experience" value="No" data-expected-ai-intent="python_experience"> No
+            </label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reason-for-interest">Why are you interested in this role?</label>
+          <textarea id="reason-for-interest" name="why_role" placeholder="Write answer..." data-expected-ai-intent="why_role"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="react-project">Describe a project that shows your React expertise</label>
+          <textarea id="react-project" name="react_project" placeholder="Tell us about a React project you built..." data-expected-ai-intent="react_project"></textarea>
+          <span class="error-msg" id="err-react-project">Please describe your React project experience.</span>
+        </div>
+        <div class="form-group">
+          <label for="ml-experience">Describe your machine learning and LLM experience</label>
+          <textarea id="ml-experience" name="ml_experience" placeholder="Detail your ML experience..." data-expected-ai-intent="ml_experience"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="cover-letter">Cover Letter (Required)</label>
+          <textarea id="cover-letter" name="cover_letter" placeholder="Write or paste cover letter here..." data-expected-ai-intent="cover_letter"></textarea>
+          <span class="error-msg" id="err-cover-letter">Please provide a cover letter.</span>
+        </div>
+      </fieldset>
+
+      <!-- 10. Diversity / Compliance (Optional, marked data-skip="true") -->
+      <fieldset data-skip="true">
+        <legend>10. Diversity & Compliance (Optional)</legend>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="gender-select">Gender</label>
+            <select id="gender-select" name="gender" data-expected-ai-intent="gender" data-skip="true">
+              <option value="">Decline to self-identify</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="race-select">Race/Ethnicity</label>
+            <select id="race-select" name="race" data-expected-ai-intent="race" data-skip="true">
+              <option value="">Decline to self-identify</option>
+              <option value="white">White</option>
+              <option value="asian">Asian</option>
+              <option value="black">Black or African American</option>
+              <option value="hispanic">Hispanic or Latino</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Veteran Status</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" id="vet-decline" name="veteran" value="decline" checked data-expected-ai-intent="veteran" data-skip="true"> Decline to answer
+              </label>
+              <label class="radio-option">
+                <input type="radio" id="vet-yes" name="veteran" value="yes" data-expected-ai-intent="veteran" data-skip="true"> I am a veteran
+              </label>
+              <label class="radio-option">
+                <input type="radio" id="vet-no" name="veteran" value="no" data-expected-ai-intent="veteran" data-skip="true"> I am not a veteran
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="disability-select">Disability Status</label>
+            <select id="disability-select" name="disability" data-expected-ai-intent="disability" data-skip="true">
+              <option value="">Decline to answer</option>
+              <option value="yes">Yes, I have a disability</option>
+              <option value="no">No, I do not have a disability</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 11. Availability Fields -->
+      <fieldset>
+        <legend>11. Availability</legend>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="start-date">Earliest Start Date</label>
+            <input type="date" id="start-date" name="start_date" data-expected-ai-intent="start_date">
+          </div>
+          <div class="form-group">
+            <label for="notice-period">Notice Period</label>
+            <select id="notice-period" name="notice_period" data-expected-ai-intent="notice_period">
+              <option value="">-- Select Notice Period --</option>
+              <option value="immediate">Immediate</option>
+              <option value="2weeks">2 weeks</option>
+              <option value="1month">1 month</option>
+              <option value="longer">More than 1 month</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 12. Technical Assessment Fields -->
+      <fieldset>
+        <legend>12. Technical Assessments</legend>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="hackerrank-username">HackerRank Username</label>
+            <input type="text" id="hackerrank-username" name="hackerrank_username" placeholder="username" data-expected-ai-intent="hackerrank">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 13. Autocomplete Field Resolution (Semantic Autocomplete Resolution testing) -->
+      <fieldset id="autocomplete-resolution-section">
+        <legend>13. Autocomplete Field Resolution</legend>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="auto-location">Target Location Autocomplete</label>
+            <div class="custom-select-wrapper">
+              <input type="text" id="auto-location" name="auto_location" role="combobox" aria-expanded="false" class="custom-select-trigger" placeholder="Type location..." data-autocomplete="true" data-expected-ai-intent="auto_location">
+              <div id="auto-location-list" class="custom-options" style="display: none;"></div>
+            </div>
+            <input type="hidden" id="auto-location-val" name="auto_location_val">
+          </div>
+          
+          <div class="form-group">
+            <label for="auto-university">University Autocomplete</label>
+            <div class="custom-select-wrapper">
+              <input type="text" id="auto-university" name="auto_university" role="combobox" aria-expanded="false" class="custom-select-trigger" placeholder="Type university..." data-autocomplete="true" data-expected-ai-intent="auto_university">
+              <div id="auto-university-list" class="custom-options" style="display: none;"></div>
+            </div>
+            <input type="hidden" id="auto-university-val" name="auto_university_val">
+          </div>
+
+          <div class="form-group">
+            <label for="auto-company">Previous Company Autocomplete</label>
+            <div class="custom-select-wrapper">
+              <input type="text" id="auto-company" name="auto_company" role="combobox" aria-expanded="false" class="custom-select-trigger" placeholder="Type company..." data-autocomplete="true" data-expected-ai-intent="auto_company">
+              <div id="auto-company-list" class="custom-options" style="display: none;"></div>
+            </div>
+            <input type="hidden" id="auto-company-val" name="auto_company_val">
+          </div>
+
+          <div class="form-group">
+            <label for="auto-skills">Core Skill Autocomplete</label>
+            <div class="custom-select-wrapper">
+              <input type="text" id="auto-skills" name="auto_skills" role="combobox" aria-expanded="false" class="custom-select-trigger" placeholder="Type skill..." data-autocomplete="true" data-expected-ai-intent="auto_skills">
+              <div id="auto-skills-list" class="custom-options" style="display: none;"></div>
+            </div>
+            <input type="hidden" id="auto-skills-val" name="auto_skills_val">
+          </div>
+
+          <div class="form-group">
+            <label for="auto-degree">Degree Type Autocomplete</label>
+            <div class="custom-select-wrapper">
+              <input type="text" id="auto-degree" name="auto_degree" role="combobox" aria-expanded="false" class="custom-select-trigger" placeholder="Type degree..." data-autocomplete="true" data-expected-ai-intent="auto_degree">
+              <div id="auto-degree-list" class="custom-options" style="display: none;"></div>
+            </div>
+            <input type="hidden" id="auto-degree-val" name="auto_degree_val">
+          </div>
+
+          <div class="form-group">
+            <label for="auto-visa">Visa Status Autocomplete</label>
+            <div class="custom-select-wrapper">
+              <input type="text" id="auto-visa" name="auto_visa" role="combobox" aria-expanded="false" class="custom-select-trigger" placeholder="Type visa status..." data-autocomplete="true" data-expected-ai-intent="auto_visa">
+              <div id="auto-visa-list" class="custom-options" style="display: none;"></div>
+            </div>
+            <input type="hidden" id="auto-visa-val" name="auto_visa_val">
+          </div>
+
+          <div class="form-group">
+            <label for="auto-no-match">No Match Autocomplete</label>
+            <div class="custom-select-wrapper">
+              <input type="text" id="auto-no-match" name="auto_no_match" role="combobox" aria-expanded="false" class="custom-select-trigger" placeholder="Type something..." data-autocomplete="true" data-expected-ai-intent="auto_no_match">
+              <div id="auto-no-match-list" class="custom-options" style="display: none;"></div>
+            </div>
+            <input type="hidden" id="auto-no-match-val" name="auto_no_match_val">
+          </div>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn-submit" id="submit-btn">Submit Application</button>
+    </form>
+
+    <!-- Diagnostic Panel for automated test verification -->
+    <div class="diagnostic-panel">
+      <div class="diagnostic-title">Test Harness Diagnostics</div>
+      <div id="validation-status" class="status-badge status-idle">IDLE - WAITING FOR INPUT</div>
+      
+      <div id="failures-container" style="display: none;">
+        <p style="margin: 4px 0; font-weight: 500;">Failed Validations:</p>
+        <ul id="failures-list" class="failures-list"></ul>
+      </div>
+
+      <div id="success-container" style="display: none; color: var(--success); font-weight: 500;">
+        ✓ Form validations passed. Ready to submit!
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('job-app-form');
+    
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      runValidations();
+    });
+
+    // Validates inputs and updates the diagnostic box
+    function runValidations() {
+      const failures = [];
+      
+      // Reset errors
+      document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('input, select, textarea').forEach(el => el.classList.remove('error-input'));
+
+      // Validate Name
+      const nameVal = document.getElementById('full-name').value.trim();
+      if (!nameVal) {
+        failures.push({ field: 'full_name', error: 'Name is empty' });
+        document.getElementById('full-name').classList.add('error-input');
+        document.getElementById('err-full-name').style.display = 'block';
+      }
+
+      // Validate Email
+      const emailVal = document.getElementById('email-address').value.trim();
+      if (!emailVal || !emailVal.includes('@')) {
+        failures.push({ field: 'email_address', error: 'Email is invalid' });
+        document.getElementById('email-address').classList.add('error-input');
+        document.getElementById('err-email-address').style.display = 'block';
+      }
+
+      // Validate Resume upload
+      const fileInput = document.getElementById('resume-upload');
+      if (!fileInput.files || fileInput.files.length === 0) {
+        failures.push({ field: 'resume_file', error: 'Resume file is missing' });
+        fileInput.classList.add('error-input');
+        document.getElementById('err-resume-upload').style.display = 'block';
+      }
+
+      // Validate Sponsorship
+      const sponsorshipYes = document.getElementById('sponsorship-yes');
+      const sponsorshipNo = document.getElementById('sponsorship-no');
+      if (!sponsorshipYes.checked && !sponsorshipNo.checked) {
+        failures.push({ field: 'visa_sponsorship', error: 'Sponsorship status not chosen' });
+        document.getElementById('err-visa-sponsorship').style.display = 'block';
+      }
+
+      // Validate JS Experience Dropdown
+      const jsExpVal = document.getElementById('js-experience').value;
+      if (!jsExpVal) {
+        failures.push({ field: 'js_experience', error: 'Experience dropdown is empty' });
+        document.getElementById('js-experience').classList.add('error-input');
+        document.getElementById('err-js-experience').style.display = 'block';
+      }
+
+      // Validate Custom Picklist Role
+      const customRoleVal = document.getElementById('custom-role-input').value;
+      if (!customRoleVal) {
+        failures.push({ field: 'preferred_subfield', error: 'Preferred subfield custom picklist is empty' });
+        document.getElementById('custom-role-combobox').classList.add('error-input');
+        document.getElementById('err-custom-role').style.display = 'block';
+      }
+
+      // Validate Autocomplete Location
+      const locationVal = document.getElementById('location-input').value;
+      if (!locationVal) {
+        failures.push({ field: 'preferred_location', error: 'Preferred location autocomplete is empty' });
+        document.getElementById('location-autocomplete').classList.add('error-input');
+        document.getElementById('err-location').style.display = 'block';
+      }
+
+      // Validate Desired Salary
+      const salaryVal = document.getElementById('desired-salary').value.trim();
+      if (!salaryVal) {
+        failures.push({ field: 'desired_salary', error: 'Desired annual salary is empty' });
+        document.getElementById('desired-salary').classList.add('error-input');
+        document.getElementById('err-desired-salary').style.display = 'block';
+      }
+
+      // Validate Written Question
+      const projectVal = document.getElementById('react-project').value.trim();
+      if (!projectVal || projectVal.length < 15) {
+        failures.push({ field: 'react_project', error: 'React project response is too short or empty' });
+        document.getElementById('react-project').classList.add('error-input');
+        document.getElementById('err-react-project').style.display = 'block';
+      }
+
+      // Validate Cover Letter
+      const coverLetterVal = document.getElementById('cover-letter').value.trim();
+      if (!coverLetterVal || coverLetterVal.length < 50) {
+        failures.push({ field: 'cover_letter', error: 'Cover letter is too short or empty' });
+        document.getElementById('cover-letter').classList.add('error-input');
+        document.getElementById('err-cover-letter').style.display = 'block';
+      }
+
+      // Update Diagnostics
+      const statusBadge = document.getElementById('validation-status');
+      const failuresContainer = document.getElementById('failures-container');
+      const failuresList = document.getElementById('failures-list');
+      const successContainer = document.getElementById('success-container');
+
+      failuresList.innerHTML = '';
+      
+      if (failures.length > 0) {
+        statusBadge.textContent = 'VALIDATION FAILED';
+        statusBadge.className = 'status-badge status-error';
+        failuresContainer.style.display = 'block';
+        successContainer.style.display = 'none';
+
+        failures.forEach(f => {
+          const li = document.createElement('li');
+          li.textContent = `Field "${f.field}": ${f.error}`;
+          failuresList.appendChild(li);
+        });
+      } else {
+        statusBadge.textContent = 'VALIDATION PASSED';
+        statusBadge.className = 'status-badge status-success';
+        failuresContainer.style.display = 'none';
+        successContainer.style.display = 'block';
+      }
+    }
+
+    // Expose form details helper for puppeteer inspection
+    window.getFormState = () => {
+      const sponsorship = document.getElementById('sponsorship-yes').checked ? 'Yes' : 
+                          (document.getElementById('sponsorship-no').checked ? 'No' : '');
+      const files = document.getElementById('resume-upload').files;
+      const fileName = files.length > 0 ? files[0].name : '';
+
+      const visaSelect = document.getElementById('visa-status');
+      const visaSubclass = visaSelect.options[visaSelect.selectedIndex]?.text || '';
+
+      return {
+        fullName: document.getElementById('full-name').value,
+        email: document.getElementById('email-address').value,
+        sponsorship: sponsorship,
+        visaSubclass: visaSubclass === '-- Select Visa Type --' ? '' : visaSubclass,
+        desiredSalary: document.getElementById('desired-salary').value,
+        jsExperience: document.getElementById('js-experience').value,
+        customRole: document.getElementById('custom-role-input').value,
+        preferredLocation: document.getElementById('location-input').value,
+        reactProject: document.getElementById('react-project').value,
+        coverLetter: document.getElementById('cover-letter').value,
+        resumeUploaded: files.length > 0,
+        resumeFileName: fileName,
+        autoLocation: document.getElementById('auto-location-val').value,
+        autoUniversity: document.getElementById('auto-university-val').value,
+        autoCompany: document.getElementById('auto-company-val').value,
+        autoSkills: document.getElementById('auto-skills-val').value,
+        autoDegree: document.getElementById('auto-degree-val').value,
+        autoVisa: document.getElementById('auto-visa-val').value,
+        autoNoMatch: document.getElementById('auto-no-match-val').value
+      };
+    };
+
+    // Custom Picklist interactive events setup
+    const trigger = document.getElementById('custom-role-combobox');
+    const optionsList = document.getElementById('custom-options-list');
+    const hiddenInput = document.getElementById('custom-role-input');
+
+    trigger.addEventListener('click', () => {
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      trigger.setAttribute('aria-expanded', !expanded);
+      optionsList.style.display = expanded ? 'none' : 'block';
+    });
+
+    optionsList.addEventListener('click', (e) => {
+      const option = e.target.closest('[role="option"]');
+      if (option) {
+        trigger.textContent = option.textContent.trim();
+        hiddenInput.value = option.getAttribute('data-value');
+        trigger.setAttribute('aria-expanded', 'false');
+        optionsList.style.display = 'none';
+        trigger.classList.remove('error-input');
+        document.getElementById('err-custom-role').style.display = 'none';
+        trigger.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.custom-select-wrapper')) {
+        trigger.setAttribute('aria-expanded', 'false');
+        optionsList.style.display = 'none';
+      }
+    });
+
+    // Autocomplete Location event handlers
+    const locInput = document.getElementById('location-autocomplete');
+    const locOptions = document.getElementById('location-options-list');
+    const locHidden = document.getElementById('location-input');
+
+    const LOCATIONS_DB = [
+      "New York, NY",
+      "San Francisco, CA",
+      "London, United Kingdom",
+      "Madison, NJ",
+      "Dhaka, Bangladesh"
+    ];
+
+    locInput.addEventListener('input', (e) => {
+      const query = locInput.value.toLowerCase().trim();
+      if (!query) {
+        locOptions.style.display = 'none';
+        locOptions.innerHTML = '';
+        return;
+      }
+
+      // Filter options
+      const filtered = LOCATIONS_DB.filter(loc => loc.toLowerCase().includes(query));
+      if (filtered.length > 0) {
+        locOptions.innerHTML = filtered.map(loc => 
+          `<div role="option" class="custom-option" data-value="${loc}">${loc}</div>`
+        ).join('');
+        locOptions.style.display = 'block';
+        locInput.setAttribute('aria-expanded', 'true');
+      } else {
+        locOptions.style.display = 'none';
+        locOptions.innerHTML = '';
+        locInput.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    locOptions.addEventListener('click', (e) => {
+      const option = e.target.closest('[role="option"]');
+      if (option) {
+        const val = option.getAttribute('data-value');
+        locInput.value = val;
+        locHidden.value = val;
+        locOptions.style.display = 'none';
+        locInput.setAttribute('aria-expanded', 'false');
+        locInput.classList.remove('error-input');
+        document.getElementById('err-location').style.display = 'none';
+        locInput.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+
+    // Close on click outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#location-autocomplete') && !e.target.closest('#location-options-list')) {
+        locOptions.style.display = 'none';
+        locInput.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Autocomplete field setups for Section 13 E2E tests
+    function setupAutocomplete(inputId, listId, valId, database) {
+      const input = document.getElementById(inputId);
+      const list = document.getElementById(listId);
+      const hidden = document.getElementById(valId);
+      
+      input.addEventListener('input', () => {
+        const query = input.value.toLowerCase().trim();
+        if (!query) {
+          list.style.display = 'none';
+          list.innerHTML = '';
+          return;
+        }
+        
+        // Simulating 50ms dynamic loading delay
+        setTimeout(() => {
+          const filtered = database.filter(item => item.toLowerCase().includes(query));
+          if (filtered.length > 0) {
+            list.innerHTML = filtered.map(item => 
+              `<div role="option" class="custom-option" data-value="${item}">${item}</div>`
+            ).join('');
+            list.style.display = 'block';
+            input.setAttribute('aria-expanded', 'true');
+          } else {
+            list.style.display = 'none';
+            list.innerHTML = '';
+            input.setAttribute('aria-expanded', 'false');
+          }
+        }, 50);
+      });
+      
+      list.addEventListener('click', (e) => {
+        const option = e.target.closest('[role="option"]');
+        if (option) {
+          const val = option.getAttribute('data-value');
+          input.value = val;
+          hidden.value = val;
+          input.setAttribute('data-accepted-value', val);
+          list.style.display = 'none';
+          input.setAttribute('aria-expanded', 'false');
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+      
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest(`#${inputId}`) && !e.target.closest(`#${listId}`)) {
+          list.style.display = 'none';
+          input.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    const AUTO_LOCATION_DB = [
+      "Madison, New Jersey, United States",
+      "Madison, Wisconsin, United States",
+      "Madison Heights, Michigan, United States"
+    ];
+    const AUTO_UNIVERSITY_DB = [
+      "Drew University",
+      "Rutgers University",
+      "Princeton University",
+      "NJIT"
+    ];
+    const AUTO_COMPANY_DB = [
+      "Monstarlab",
+      "Google",
+      "Meta",
+      "Amazon"
+    ];
+    const AUTO_SKILLS_DB = [
+      "Machine Learning",
+      "Software Engineering",
+      "Data Science"
+    ];
+    const AUTO_DEGREE_DB = [
+      "Bachelor of Science",
+      "Master of Science",
+      "Doctor of Philosophy"
+    ];
+    const AUTO_VISA_DB = [
+      "F-1 Student Visa",
+      "H-1B Work Visa",
+      "Green Card"
+    ];
+    const AUTO_NOMATCH_DB = [
+      "Alpha",
+      "Beta",
+      "Gamma"
+    ];
+
+    setupAutocomplete('auto-location', 'auto-location-list', 'auto-location-val', AUTO_LOCATION_DB);
+    setupAutocomplete('auto-university', 'auto-university-list', 'auto-university-val', AUTO_UNIVERSITY_DB);
+    setupAutocomplete('auto-company', 'auto-company-list', 'auto-company-val', AUTO_COMPANY_DB);
+    setupAutocomplete('auto-skills', 'auto-skills-list', 'auto-skills-val', AUTO_SKILLS_DB);
+    setupAutocomplete('auto-degree', 'auto-degree-list', 'auto-degree-val', AUTO_DEGREE_DB);
+    setupAutocomplete('auto-visa', 'auto-visa-list', 'auto-visa-val', AUTO_VISA_DB);
+    setupAutocomplete('auto-no-match', 'auto-no-match-list', 'auto-no-match-val', AUTO_NOMATCH_DB);
+
+    // Auth mode tabs toggle
+    const tabSignup = document.getElementById('tab-signup');
+    const tabLogin = document.getElementById('tab-login');
+    const confirmPasswordGroup = document.getElementById('confirm-password-group');
+    const authSubmitBtn = document.getElementById('auth-submit-btn');
+    const authTitle = document.getElementById('auth-title');
+    const authSubtitle = document.getElementById('auth-subtitle');
+    const authForm = document.getElementById('auth-form');
+    
+    let isSignupMode = true;
+
+    tabSignup.addEventListener('click', () => {
+      isSignupMode = true;
+      tabSignup.style.color = 'var(--accent)';
+      tabSignup.style.borderBottom = '2px solid var(--accent)';
+      tabLogin.style.color = 'var(--text-secondary)';
+      tabLogin.style.borderBottom = 'none';
+      confirmPasswordGroup.style.display = 'block';
+      authSubmitBtn.textContent = 'Create Account';
+      authTitle.textContent = 'Create your Acme Corp Careers Account';
+      authSubtitle.textContent = 'Sign up to apply for the Senior AI Engineer role';
+    });
+
+    tabLogin.addEventListener('click', () => {
+      isSignupMode = false;
+      tabLogin.style.color = 'var(--accent)';
+      tabLogin.style.borderBottom = '2px solid var(--accent)';
+      tabSignup.style.color = 'var(--text-secondary)';
+      tabSignup.style.borderBottom = 'none';
+      confirmPasswordGroup.style.display = 'none';
+      authSubmitBtn.textContent = 'Log In';
+      authTitle.textContent = 'Log In to Acme Corp Careers';
+      authSubtitle.textContent = 'Enter your credentials to continue your application';
+    });
+
+    authForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Reset errors
+      document.querySelectorAll('#auth-container .error-msg').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('#auth-container input').forEach(el => el.classList.remove('error-input'));
+
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value.trim();
+      const confirmPassword = document.getElementById('auth-confirm-password').value.trim();
+      
+      let hasError = false;
+
+      if (!email || !email.includes('@')) {
+        document.getElementById('auth-email').classList.add('error-input');
+        document.getElementById('err-auth-email').style.display = 'block';
+        hasError = true;
+      }
+      if (!password) {
+        document.getElementById('auth-password').classList.add('error-input');
+        document.getElementById('err-auth-password').style.display = 'block';
+        hasError = true;
+      }
+      if (isSignupMode && password !== confirmPassword) {
+        document.getElementById('auth-confirm-password').classList.add('error-input');
+        document.getElementById('err-auth-confirm-password').style.display = 'block';
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      // Successful auth! Show the application form
+      document.getElementById('auth-container').style.display = 'none';
+      document.getElementById('app-container').style.display = 'block';
+      
+      // Pre-fill email address in application form from the auth field to be convenient
+      document.getElementById('email-address').value = email;
+    });
+
+    // Dynamic Loading Simulator
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const spinner = document.getElementById('loading-spinner');
+        const authContainer = document.getElementById('auth-container');
+        if (spinner) spinner.style.display = 'none';
+        if (authContainer) authContainer.style.display = 'block';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

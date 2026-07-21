@@ -1,0 +1,77 @@
+{
+  "timestamp": "2026-07-15T03:21:52.269Z",
+  "backendUrl": "http://127.0.0.1:5000",
+  "threshold": 0.05,
+  "previousSession": {
+    "id": "4f8d5cce-408b-44b5-9ac7-ed8f26774740",
+    "createdAt": "2026-07-09T04:56:10.530Z",
+    "platform": "lever"
+  },
+  "currentSession": {
+    "id": "3607d336-0b87-4503-af18-743f81a8ac7f",
+    "createdAt": "2026-07-09T04:56:10.546Z",
+    "platform": "synthetic-ats"
+  },
+  "summary": {
+    "totalMetrics": 6,
+    "regressions": 0,
+    "improvements": 4,
+    "stable": 2
+  },
+  "regressions": [],
+  "improvements": [
+    {
+      "metric": "completionRate",
+      "prev": 0.88,
+      "curr": 0.98,
+      "delta": 0.1,
+      "threshold": 0.05,
+      "higherIsBetter": true,
+      "weight": 0.3,
+      "status": "improvement"
+    },
+    {
+      "metric": "fieldAccuracy",
+      "prev": 0.85,
+      "curr": 0.96,
+      "delta": 0.11,
+      "threshold": 0.05,
+      "higherIsBetter": true,
+      "weight": 0.25,
+      "status": "improvement"
+    },
+    {
+      "metric": "avgConfidence",
+      "prev": 0.82,
+      "curr": 0.93,
+      "delta": 0.11,
+      "threshold": 0.05,
+      "higherIsBetter": true,
+      "weight": 0.15,
+      "status": "improvement"
+    },
+    {
+      "metric": "semanticAccuracy",
+      "prev": 0.86,
+      "curr": 0.97,
+      "delta": 0.11,
+      "threshold": 0.05,
+      "higherIsBetter": true,
+      "weight": 0.1,
+      "status": "improvement"
+    }
+  ],
+  "stable": [
+    {
+      "metric": "skipRate",
+      "status": "missing",
+      "delta": null
+    },
+    {
+      "metric": "errorRate",
+      "status": "missing",
+      "delta": null
+    }
+  ],
+  "status": "PASSED"
+}

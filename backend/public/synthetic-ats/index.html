@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaCorp Careers — Software Engineer Application</title>
+  <meta name="description" content="Apply for the Software Engineer position at NovaCorp. Complete your application in 4 steps.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div id="ats-loading" class="ats-loading-overlay" role="status" aria-live="polite">
+    <div class="ats-spinner"></div>
+    <div class="ats-loading-text" id="loading-text">Processing your information...</div>
+  </div>
+
+  <!-- Modal -->
+  <div id="ats-modal" class="ats-modal-backdrop" role="dialog" aria-modal="true">
+    <div class="ats-modal">
+      <h3 id="modal-title">Confirm Submission</h3>
+      <p id="modal-body">Are you sure you want to submit your application? This cannot be undone.</p>
+      <div class="ats-modal-actions">
+        <button class="ats-btn ats-btn-secondary" id="modal-cancel-btn">Cancel</button>
+        <button class="ats-btn ats-btn-success" id="modal-confirm-btn">Submit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="ats-navbar">
+    <div class="ats-navbar-brand">
+      <div class="ats-navbar-logo">&#x1F3E2;</div>
+      <span>NovaCorp Careers</span>
+    </div>
+    <span class="ats-navbar-meta">SyntheticATS v2.0 - AI Agent Test Environment</span>
+  </nav>
+
+  <div class="ats-shell">
+
+    <!-- Job Header -->
+    <div class="ats-job-header">
+      <div class="ats-company-logo">&#x1F680;</div>
+      <div class="ats-job-info">
+        <h1>Software Engineer - Platform Team</h1>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+          <span class="ats-badge ats-badge-blue">Full-time</span>
+          <span class="ats-badge ats-badge-green">Remote / Hybrid</span>
+          <span class="ats-badge ats-badge-gray">New York, NY</span>
+        </div>
+        <div class="ats-job-meta">
+          <span class="ats-job-meta-item">&#x1F4B0; $110,000 - $160,000</span>
+          <span class="ats-job-meta-item">&#x1F3E2; NovaCorp Inc.</span>
+          <span class="ats-job-meta-item">&#x1F4C5; Posted July 8, 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Stepper -->
+    <div class="ats-stepper" id="stepper" role="progressbar" aria-label="Application progress">
+      <div class="ats-step active" id="step-indicator-1">
+        <div class="ats-step-circle">1</div>
+        <span class="ats-step-label">Personal Info</span>
+      </div>
+      <div class="ats-step-connector" id="connector-1"></div>
+      <div class="ats-step" id="step-indicator-2">
+        <div class="ats-step-circle">2</div>
+        <span class="ats-step-label">Background</span>
+      </div>
+      <div class="ats-step-connector" id="connector-2"></div>
+      <div class="ats-step" id="step-indicator-3">
+        <div class="ats-step-circle">3</div>
+        <span class="ats-step-label">Questions</span>
+      </div>
+      <div class="ats-step-connector" id="connector-3"></div>
+      <div class="ats-step" id="step-indicator-4">
+        <div class="ats-step-circle">4</div>
+        <span class="ats-step-label">Review</span>
+      </div>
+    </div>
+
+    <!-- PAGE 1: Personal Information + Resume Upload -->
+    <div class="ats-form-card active" id="form-page-1">
+      <div class="ats-section-header">
+        <div class="ats-section-icon">&#x1F464;</div>
+        <div>
+          <div class="ats-section-title">Personal Information</div>
+          <div class="ats-section-desc">Fields marked <span style="color:#c62828">*</span> are required.</div>
+        </div>
+      </div>
+      <div class="ats-form-body">
+        <div id="page1-validation" class="ats-alert ats-alert-error ats-validation-banner" role="alert">
+          Please fix the highlighted errors before continuing.
+        </div>
+
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="first-name">First Name <span class="ats-required-mark">*</span></label>
+            <input class="ats-input" type="text" id="first-name" name="first_name" placeholder="Jane" autocomplete="given-name" required>
+            <div class="ats-field-error" id="first-name-error">First name is required.</div>
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="last-name">Last Name <span class="ats-required-mark">*</span></label>
+            <input class="ats-input" type="text" id="last-name" name="last_name" placeholder="Smith" autocomplete="family-name" required>
+            <div class="ats-field-error" id="last-name-error">Last name is required.</div>
+          </div>
+        </div>
+
+        <div class="ats-field-group">
+          <label class="ats-label" for="preferred-name">Preferred Name / Nickname</label>
+          <input class="ats-input" type="text" id="preferred-name" name="preferred_name" placeholder="How would you like to be addressed?">
+          <div class="ats-hint">Optional. Leave blank to use your legal first name.</div>
+        </div>
+
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="email">Email Address <span class="ats-required-mark">*</span></label>
+            <input class="ats-input" type="email" id="email" name="email" placeholder="jane@example.com" autocomplete="email" required>
+            <div class="ats-field-error" id="email-error">A valid email address is required.</div>
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="phone">Phone Number <span class="ats-required-mark">*</span></label>
+            <input class="ats-input" type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" autocomplete="tel" required>
+            <div class="ats-field-error" id="phone-error">Phone number is required.</div>
+          </div>
+        </div>
+
+        <div class="ats-field-group">
+          <label class="ats-label" for="address-street">Street Address <span class="ats-required-mark">*</span></label>
+          <input class="ats-input" type="text" id="address-street" name="address_street" placeholder="123 Main Street" autocomplete="street-address" required>
+          <div class="ats-field-error" id="address-street-error">Street address is required.</div>
+        </div>
+
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="address-city">City <span class="ats-required-mark">*</span></label>
+            <input class="ats-input" type="text" id="address-city" name="address_city" placeholder="New York" autocomplete="address-level2" required>
+            <div class="ats-field-error" id="address-city-error">City is required.</div>
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="address-state">State <span class="ats-required-mark">*</span></label>
+            <select class="ats-select" id="address-state" name="address_state" required>
+              <option value="">Select State</option>
+              <option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option>
+              <option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option>
+              <option value="DE">Delaware</option><option value="FL">Florida</option><option value="GA">Georgia</option>
+              <option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option>
+              <option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option>
+              <option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option>
+              <option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option>
+              <option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option>
+              <option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option>
+              <option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option>
+              <option value="NC">North Carolina</option><option value="OH">Ohio</option><option value="OR">Oregon</option>
+              <option value="PA">Pennsylvania</option><option value="SC">South Carolina</option><option value="TN">Tennessee</option>
+              <option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option>
+              <option value="VA">Virginia</option><option value="WA">Washington</option><option value="WI">Wisconsin</option>
+            </select>
+            <div class="ats-field-error" id="address-state-error">State is required.</div>
+          </div>
+        </div>
+
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="address-zip">ZIP / Postal Code <span class="ats-required-mark">*</span></label>
+            <input class="ats-input" type="text" id="address-zip" name="postal_code" placeholder="10001" autocomplete="postal-code" required>
+            <div class="ats-field-error" id="address-zip-error">ZIP code is required.</div>
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="address-country">Country</label>
+            <select class="ats-select" id="address-country" name="country">
+              <option value="">Select Country</option>
+              <option value="US" selected>United States</option>
+              <option value="CA">Canada</option>
+              <option value="GB">United Kingdom</option>
+              <option value="AU">Australia</option>
+              <option value="IN">India</option>
+              <option value="DE">Germany</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ats-field-group">
+          <label class="ats-label" for="linkedin-url">LinkedIn Profile URL</label>
+          <input class="ats-input" type="url" id="linkedin-url" name="linkedin_url" placeholder="https://linkedin.com/in/your-profile">
+        </div>
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="github-url">GitHub Profile URL</label>
+            <input class="ats-input" type="url" id="github-url" name="github_url" placeholder="https://github.com/your-handle">
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="portfolio-url">Portfolio / Personal Website</label>
+            <input class="ats-input" type="url" id="portfolio-url" name="portfolio_url" placeholder="https://yoursite.com">
+          </div>
+        </div>
+
+        <hr class="ats-divider">
+
+        <!-- Resume Upload (adversarial: two file upload zones with similar labels) -->
+        <div class="ats-field-group">
+          <label class="ats-label">Upload CV <span class="ats-required-mark">*</span></label>
+          <div class="ats-file-zone" id="resume-drop-zone" role="button" tabindex="0" aria-label="Upload resume or CV file">
+            <div class="ats-file-icon">&#x1F4C4;</div>
+            <div class="ats-file-label">
+              Drag and drop your CV / Resume, or <strong id="resume-browse-link" style="color:var(--ats-primary);cursor:pointer;">browse</strong>
+            </div>
+            <div class="ats-file-name" id="resume-file-name">File selected</div>
+          </div>
+          <input type="file" id="resume-file-input" name="resume" class="ats-file-input-hidden" accept=".pdf,.doc,.docx">
+          <div class="ats-hint mt-4">PDF, DOC, or DOCX. Max 10 MB.</div>
+          <div class="ats-field-error" id="resume-error">Please upload your resume or CV.</div>
+        </div>
+
+        <!-- Adversarial: Cover letter upload zone with similar (misleading) label -->
+        <div class="ats-field-group">
+          <label class="ats-label">Attach Supporting Documents</label>
+          <div class="ats-file-zone" id="cover-drop-zone" role="button" tabindex="0" aria-label="Upload cover letter or supporting documents">
+            <div class="ats-file-icon">&#x1F4DD;</div>
+            <div class="ats-file-label">
+              Upload cover letter, or <strong id="cover-browse-link" style="color:var(--ats-primary);cursor:pointer;">browse</strong>
+            </div>
+            <div class="ats-file-name" id="cover-file-name">File selected</div>
+          </div>
+          <input type="file" id="cover-file-input" name="cover_letter_file" class="ats-file-input-hidden" accept=".pdf,.doc,.docx">
+          <div class="ats-hint mt-4">Optional. Cover letter, portfolio, or other supporting materials.</div>
+        </div>
+
+      </div>
+      <div class="ats-form-actions">
+        <div></div>
+        <button class="ats-btn ats-btn-primary" id="page1-next-btn" data-action="next-page">
+          Continue to Background
+        </button>
+      </div>
+    </div>
+
+    <!-- PAGE 2: Background, Education, Work Authorization -->
+    <div class="ats-form-card" id="form-page-2">
+      <div class="ats-section-header">
+        <div class="ats-section-icon">&#x1F393;</div>
+        <div>
+          <div class="ats-section-title">Background and Work Authorization</div>
+          <div class="ats-section-desc">Education history and eligibility to work in the United States.</div>
+        </div>
+      </div>
+      <div class="ats-form-body">
+        <div id="page2-validation" class="ats-alert ats-alert-error ats-validation-banner" role="alert">
+          Please complete all required fields.
+        </div>
+
+        <div class="ats-field-group">
+          <label class="ats-label" for="edu-school">Most Recent University / College <span class="ats-required-mark">*</span></label>
+          <input class="ats-input" type="text" id="edu-school" name="edu_school" placeholder="Massachusetts Institute of Technology" required>
+          <div class="ats-field-error" id="edu-school-error">School name is required.</div>
+        </div>
+
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="edu-degree">Degree Level <span class="ats-required-mark">*</span></label>
+            <select class="ats-select" id="edu-degree" name="edu_degree" required>
+              <option value="">Select Degree</option>
+              <option value="High School Diploma">High School Diploma / GED</option>
+              <option value="Associate's Degree">Associate's Degree</option>
+              <option value="Bachelor's Degree">Bachelor's Degree</option>
+              <option value="Master's Degree">Master's Degree</option>
+              <option value="Doctorate">Doctorate (Ph.D.)</option>
+              <option value="Professional Degree">Professional Degree</option>
+            </select>
+            <div class="ats-field-error" id="edu-degree-error">Degree level is required.</div>
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="edu-major">Field of Study / Major <span class="ats-required-mark">*</span></label>
+            <input class="ats-input" type="text" id="edu-major" name="edu_major" placeholder="Computer Science" required>
+            <div class="ats-field-error" id="edu-major-error">Field of study is required.</div>
+          </div>
+        </div>
+
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="edu-grad-year">Graduation Year <span class="ats-required-mark">*</span></label>
+            <select class="ats-select" id="edu-grad-year" name="edu_grad_year" required>
+              <option value="">Select Year</option>
+              <option value="2028">2028 (Expected)</option>
+              <option value="2027">2027 (Expected)</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+              <option value="2019">2019</option>
+              <option value="Earlier">Earlier</option>
+            </select>
+            <div class="ats-field-error" id="edu-grad-year-error">Graduation year is required.</div>
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="edu-gpa">GPA (optional)</label>
+            <input class="ats-input" type="text" id="edu-gpa" name="edu_gpa" placeholder="3.8 / 4.0">
+          </div>
+        </div>
+
+        <div class="ats-field-group">
+          <label class="ats-label" for="years-experience">Total Years of Professional Experience <span class="ats-required-mark">*</span></label>
+          <select class="ats-select" id="years-experience" name="years_of_experience" required>
+            <option value="">Select</option>
+            <option value="0">Less than 1 year</option>
+            <option value="1">1-2 years</option>
+            <option value="3">3-5 years</option>
+            <option value="6">6-10 years</option>
+            <option value="10+">10+ years</option>
+          </select>
+          <div class="ats-field-error" id="years-experience-error">Please select years of experience.</div>
+        </div>
+
+        <hr class="ats-divider">
+
+        <!-- ADVERSARIAL: Four similar work authorization questions -->
+        <div style="background:#f8f9ff; border:1px solid #e0e7ff; border-radius:8px; padding:20px;">
+          <div style="font-size:0.85rem; font-weight:700; color:#0057b8; margin-bottom:14px;">
+            Work Authorization and Visa Status
+          </div>
+
+          <!-- Q1: Are you authorized to work? -->
+          <div class="ats-field-group" style="margin-bottom:14px;">
+            <label class="ats-label">Are you legally authorized to work in the United States? <span class="ats-required-mark">*</span></label>
+            <div class="ats-radio-group" id="authorized-group">
+              <label class="ats-radio-option" for="auth-yes">
+                <input type="radio" id="auth-yes" name="authorized_to_work" value="Yes" required>
+                <div>
+                  <div class="ats-option-label">Yes</div>
+                  <div class="ats-option-desc">I am legally authorized to work in the US without restriction</div>
+                </div>
+              </label>
+              <label class="ats-radio-option" for="auth-no">
+                <input type="radio" id="auth-no" name="authorized_to_work" value="No">
+                <div>
+                  <div class="ats-option-label">No</div>
+                  <div class="ats-option-desc">I am not currently authorized to work in the US</div>
+                </div>
+              </label>
+            </div>
+            <div class="ats-field-error" id="authorized-error">Please answer this question.</div>
+          </div>
+
+          <!-- Q2: Require sponsorship? (different from authorized!) -->
+          <div class="ats-field-group" style="margin-bottom:14px;">
+            <label class="ats-label">Will you now or in the future require visa sponsorship? <span class="ats-required-mark">*</span></label>
+            <div class="ats-radio-group" id="sponsorship-group">
+              <label class="ats-radio-option" for="sponsor-yes">
+                <input type="radio" id="sponsor-yes" name="sponsorship_required" value="Yes" required>
+                <div>
+                  <div class="ats-option-label">Yes</div>
+                  <div class="ats-option-desc">I will require employer visa sponsorship now or in the future</div>
+                </div>
+              </label>
+              <label class="ats-radio-option" for="sponsor-no">
+                <input type="radio" id="sponsor-no" name="sponsorship_required" value="No">
+                <div>
+                  <div class="ats-option-label">No</div>
+                  <div class="ats-option-desc">I do not require sponsorship</div>
+                </div>
+              </label>
+            </div>
+            <div class="ats-field-error" id="sponsorship-error">Please answer this question.</div>
+          </div>
+
+          <!-- CONDITIONAL: Visa type — only shown if sponsorship = Yes -->
+          <div class="ats-conditional" id="visa-conditional">
+            <div class="ats-field-group">
+              <label class="ats-label" for="visa-type">Current Visa / Work Authorization Type <span class="ats-required-mark">*</span></label>
+              <select class="ats-select" id="visa-type" name="visa_type">
+                <option value="">Select Visa Type</option>
+                <option value="F-1 OPT">F-1 OPT (Optional Practical Training)</option>
+                <option value="F-1 CPT">F-1 CPT (Curricular Practical Training)</option>
+                <option value="H-1B">H-1B (Specialty Occupation)</option>
+                <option value="L-1">L-1 (Intracompany Transferee)</option>
+                <option value="O-1">O-1 (Extraordinary Ability)</option>
+                <option value="TN">TN (Canada/Mexico Trade Professionals)</option>
+                <option value="EAD">EAD (Employment Authorization Document)</option>
+                <option value="Green Card">Green Card (Permanent Resident)</option>
+                <option value="Other">Other</option>
+              </select>
+              <div class="ats-field-error" id="visa-type-error">Please select your visa type.</div>
+            </div>
+            <div class="ats-field-group">
+              <label class="ats-label" for="visa-expiry">Visa / Work Authorization Expiration Date</label>
+              <input class="ats-input" type="date" id="visa-expiry" name="visa_expiry">
+              <div class="ats-hint">Leave blank if permanent.</div>
+            </div>
+          </div>
+
+          <!-- Q3: US Citizen? (another similar question) -->
+          <div class="ats-field-group" style="margin-bottom:14px;">
+            <label class="ats-label">Are you a United States citizen or national? <span class="ats-required-mark">*</span></label>
+            <div class="ats-radio-group" id="citizen-group">
+              <label class="ats-radio-option" for="citizen-yes">
+                <input type="radio" id="citizen-yes" name="us_citizen" value="Yes" required>
+                <div><div class="ats-option-label">Yes, I am a US citizen or national</div></div>
+              </label>
+              <label class="ats-radio-option" for="citizen-no">
+                <input type="radio" id="citizen-no" name="us_citizen" value="No">
+                <div><div class="ats-option-label">No, I am not a US citizen or national</div></div>
+              </label>
+            </div>
+            <div class="ats-field-error" id="citizen-error">Please answer this question.</div>
+          </div>
+
+          <!-- Q4: Eligible to work? (fourth similar work auth question) -->
+          <div class="ats-field-group" style="margin-bottom:0;">
+            <label class="ats-label">Are you eligible to work in the United States on a permanent basis without restriction? <span class="ats-required-mark">*</span></label>
+            <div class="ats-radio-group" id="eligible-group">
+              <label class="ats-radio-option" for="eligible-yes">
+                <input type="radio" id="eligible-yes" name="eligible_to_work" value="Yes" required>
+                <div><div class="ats-option-label">Yes</div></div>
+              </label>
+              <label class="ats-radio-option" for="eligible-no">
+                <input type="radio" id="eligible-no" name="eligible_to_work" value="No">
+                <div><div class="ats-option-label">No</div></div>
+              </label>
+            </div>
+            <div class="ats-field-error" id="eligible-error">Please answer this question.</div>
+          </div>
+        </div>
+
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="availability-date">Earliest Start Date <span class="ats-required-mark">*</span></label>
+            <input class="ats-input" type="date" id="availability-date" name="availability_date" required>
+            <div class="ats-field-error" id="availability-date-error">Start date is required.</div>
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="willing-relocate">Willing to Relocate?</label>
+            <select class="ats-select" id="willing-relocate" name="willing_to_relocate">
+              <option value="">Select</option>
+              <option value="Yes">Yes, open to relocation</option>
+              <option value="No">No, prefer current location</option>
+              <option value="Negotiable">Negotiable</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+      <div class="ats-form-actions">
+        <button class="ats-btn ats-btn-secondary" data-action="prev-page">Back</button>
+        <button class="ats-btn ats-btn-primary" id="page2-next-btn" data-action="next-page">
+          Continue to Questions
+        </button>
+      </div>
+    </div>
+
+    <!-- PAGE 3: Essay Questions + Compensation + EEO -->
+    <div class="ats-form-card" id="form-page-3">
+      <div class="ats-section-header">
+        <div class="ats-section-icon">&#x1F4AC;</div>
+        <div>
+          <div class="ats-section-title">Application Questions</div>
+          <div class="ats-section-desc">These responses are reviewed by the hiring team. Answer thoughtfully.</div>
+        </div>
+      </div>
+      <div class="ats-form-body">
+        <div id="page3-validation" class="ats-alert ats-alert-error ats-validation-banner" role="alert">
+          Please complete all required fields.
+        </div>
+
+        <div class="ats-field-group">
+          <label class="ats-label" for="cover-letter-text">Cover Letter <span class="ats-required-mark">*</span></label>
+          <textarea class="ats-textarea" id="cover-letter-text" name="cover_letter" placeholder="Dear Hiring Manager,&#10;&#10;I am writing to express my enthusiastic interest..." style="min-height:160px;" required></textarea>
+          <div class="ats-hint">500-1000 words recommended.</div>
+          <div class="ats-field-error" id="cover-letter-error">Cover letter is required.</div>
+        </div>
+
+        <div class="ats-field-group">
+          <label class="ats-label" for="essay-why">Why do you want to work at NovaCorp? <span class="ats-required-mark">*</span></label>
+          <textarea class="ats-textarea" id="essay-why" name="essay_why_novacorp" placeholder="Describe what draws you to NovaCorp's mission..." style="min-height:100px;" required></textarea>
+          <div class="ats-field-error" id="essay-why-error">This field is required.</div>
+        </div>
+
+        <div class="ats-field-group">
+          <label class="ats-label" for="essay-technical">Describe a challenging technical problem you solved.</label>
+          <textarea class="ats-textarea" id="essay-technical" name="essay_technical_challenge" placeholder="Walk us through a complex engineering problem..." style="min-height:100px;"></textarea>
+        </div>
+
+        <hr class="ats-divider">
+
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="remote-pref">Work Arrangement Preference <span class="ats-required-mark">*</span></label>
+            <select class="ats-select" id="remote-pref" name="remote_preference" required>
+              <option value="">Select</option>
+              <option value="Remote">Fully Remote</option>
+              <option value="Hybrid">Hybrid (2-3 days in office)</option>
+              <option value="On-site">On-site (5 days in office)</option>
+              <option value="Flexible">Flexible / No preference</option>
+            </select>
+            <div class="ats-field-error" id="remote-pref-error">Please select your preference.</div>
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="employment-type">Employment Type <span class="ats-required-mark">*</span></label>
+            <select class="ats-select" id="employment-type" name="employment_type" required>
+              <option value="">Select</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract / Freelance</option>
+              <option value="Internship">Internship</option>
+            </select>
+            <div class="ats-field-error" id="employment-type-error">Please select employment type.</div>
+          </div>
+        </div>
+
+        <!-- Adversarial: current compensation vs desired salary (two different questions) -->
+        <div class="ats-field-row">
+          <div class="ats-field-group">
+            <label class="ats-label" for="salary-current">Current Compensation (USD, annual)</label>
+            <input class="ats-input" type="text" id="salary-current" name="current_compensation" placeholder="e.g. 95000">
+            <div class="ats-hint">Optional. Base salary only.</div>
+          </div>
+          <div class="ats-field-group">
+            <label class="ats-label" for="salary-expected">Desired Salary (USD, annual) <span class="ats-required-mark">*</span></label>
+            <input class="ats-input" type="text" id="salary-expected" name="desired_salary" placeholder="e.g. 130000" required>
+            <div class="ats-field-error" id="salary-expected-error">Expected salary is required.</div>
+          </div>
+        </div>
+
+        <div class="ats-field-group">
+          <label class="ats-label" for="notice-period">Notice Period / Availability</label>
+          <select class="ats-select" id="notice-period" name="notice_period">
+            <option value="">Select</option>
+            <option value="Immediately available">Immediately available</option>
+            <option value="1 week">1 week notice</option>
+            <option value="2 weeks">2 weeks notice</option>
+            <option value="1 month">1 month notice</option>
+            <option value="2 months">2 months notice</option>
+            <option value="3+ months">3+ months notice</option>
+          </select>
+        </div>
+
+        <hr class="ats-divider">
+
+        <!-- EEO Voluntary Self-ID -->
+        <div style="background:#f8f9fa; border:1px solid var(--ats-border); border-radius:8px; padding:20px;">
+          <div style="font-size:0.8rem; font-weight:700; color:var(--ats-text-secondary); text-transform:uppercase; margin-bottom:4px;">Voluntary Self-Identification (EEO)</div>
+          <p style="font-size:0.78rem; color:var(--ats-text-secondary); margin-bottom:14px; line-height:1.6;">
+            NovaCorp is an Equal Opportunity Employer. This information is requested for government reporting purposes only. Providing this information is voluntary and will not affect your application.
+          </p>
+          <div class="ats-field-row">
+            <div class="ats-field-group">
+              <label class="ats-label" for="gender-identity">Gender</label>
+              <select class="ats-select" id="gender-identity" name="gender">
+                <option value="Decline to self-identify">Prefer not to say</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Non-binary / Third gender</option>
+              </select>
+            </div>
+            <div class="ats-field-group">
+              <label class="ats-label" for="race-ethnicity">Race / Ethnicity</label>
+              <select class="ats-select" id="race-ethnicity" name="race">
+                <option value="Decline to self-identify">Prefer not to say</option>
+                <option value="Asian">Asian</option>
+                <option value="Black or African American">Black or African American</option>
+                <option value="Hispanic or Latino">Hispanic or Latino</option>
+                <option value="White">White</option>
+                <option value="Two or more races">Two or more races</option>
+              </select>
+            </div>
+          </div>
+          <div class="ats-field-row" style="margin-top:14px;">
+            <div class="ats-field-group">
+              <label class="ats-label" for="veteran-status">Veteran Status</label>
+              <select class="ats-select" id="veteran-status" name="veteran_status">
+                <option value="I am not a protected veteran">Not a protected veteran</option>
+                <option value="I am a veteran">Protected veteran</option>
+                <option value="Decline to self-identify">Prefer not to say</option>
+              </select>
+            </div>
+            <div class="ats-field-group">
+              <label class="ats-label" for="disability-status">Disability Status</label>
+              <select class="ats-select" id="disability-status" name="disability_status">
+                <option value="No, I don't have a disability">No disability</option>
+                <option value="Yes, I have a disability">Yes, I have a disability</option>
+                <option value="Decline to self-identify">Prefer not to say</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- CAPTCHA block (shown/hidden via control panel) -->
+        <div id="captcha-section" class="ats-field-group" style="display:none;">
+          <label class="ats-label">Security Verification <span class="ats-required-mark">*</span></label>
+          <div class="ats-captcha-block">
+            <div class="ats-captcha-box" id="captcha-box" role="checkbox" aria-checked="false" tabindex="0">
+              <span id="captcha-check-icon" style="font-size:1.2rem;display:none;">&#x2713;</span>
+            </div>
+            <div>
+              <div style="font-size:0.85rem; font-weight:600;">I'm not a robot</div>
+              <div style="font-size:0.72rem; color:var(--ats-text-secondary); margin-top:2px;">reCAPTCHA · Privacy · Terms</div>
+            </div>
+          </div>
+          <div class="ats-field-error" id="captcha-error">Please complete the security verification.</div>
+        </div>
+
+      </div>
+      <div class="ats-form-actions">
+        <button class="ats-btn ats-btn-secondary" data-action="prev-page">Back</button>
+        <button class="ats-btn ats-btn-primary" id="page3-next-btn" data-action="next-page">
+          Review Application
+        </button>
+      </div>
+    </div>
+
+    <!-- PAGE 4: Review and Submit -->
+    <div class="ats-form-card" id="form-page-4">
+      <div class="ats-section-header">
+        <div class="ats-section-icon">&#x2705;</div>
+        <div>
+          <div class="ats-section-title">Review and Submit</div>
+          <div class="ats-section-desc">Review your information before submitting. You can go back to make changes.</div>
+        </div>
+      </div>
+      <div class="ats-form-body" id="review-content">
+        <!-- Dynamically populated by app.js -->
+      </div>
+      <div class="ats-form-actions">
+        <button class="ats-btn ats-btn-secondary" data-action="prev-page">Go Back</button>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <!-- ADVERSARIAL: Duplicate submit buttons — only one actually submits -->
+          <button class="ats-btn ats-btn-secondary" id="fake-submit-btn" title="Decoy button — does not submit">
+            Submit Application
+          </button>
+          <button class="ats-btn ats-btn-success" id="real-submit-btn">
+            Confirm and Submit Application
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 5: Success -->
+    <div class="ats-form-card" id="form-page-5">
+      <div style="text-align:center; padding:60px 28px;">
+        <div class="ats-success-icon">&#x2713;</div>
+        <h2 class="ats-success-title">Application Submitted Successfully!</h2>
+        <p class="ats-success-desc">
+          Thank you for applying to the <strong>Software Engineer - Platform Team</strong> position at NovaCorp Inc.
+          Our recruiting team will review your application and reach out within 5-7 business days.
+        </p>
+        <div class="ats-ref-number" id="ref-number">Ref: NOVA-2026-000000</div>
+        <button class="ats-btn ats-btn-secondary" onclick="window.location.reload()">
+          Start New Test Application
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /.ats-shell -->
+
+  <!-- ADVERSARIAL CONTROL PANEL -->
+  <div class="ats-control-panel" id="control-panel" role="complementary" aria-label="Test harness controls">
+    <h4>Adversarial Controls</h4>
+    <div class="ats-control-row">
+      <label>Loading Delay</label>
+      <select id="ctrl-delay">
+        <option value="0">None</option>
+        <option value="800">0.8s</option>
+        <option value="2000" selected>2s</option>
+        <option value="5000">5s</option>
+      </select>
+    </div>
+    <div class="ats-control-row">
+      <label>Show CAPTCHA</label>
+      <button class="ats-toggle" id="ctrl-captcha" aria-pressed="false"></button>
+    </div>
+    <div class="ats-control-row">
+      <label>Trigger Validation Errors</label>
+      <button class="ats-toggle" id="ctrl-errors" aria-pressed="false"></button>
+    </div>
+    <div class="ats-control-row">
+      <label>Duplicate Submit Buttons</label>
+      <button class="ats-toggle on" id="ctrl-dupe-btns" aria-pressed="true"></button>
+    </div>
+    <div class="ats-control-row">
+      <label>Conditional Visa Fields</label>
+      <button class="ats-toggle on" id="ctrl-conditional" aria-pressed="true"></button>
+    </div>
+    <div class="ats-control-row" style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1);">
+      <label style="font-size:0.72rem; color:rgba(255,255,255,0.4);">Page <span id="ctrl-page-display">1</span> of 4</label>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

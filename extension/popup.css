@@ -1,0 +1,145 @@
+/* popup.css - Styles for the AI Job Agent Extension Popup */
+
+body {
+  width: 340px;
+  min-height: 380px;
+  background-color: var(--bg-primary);
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.logo-img {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.logo-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.status-card {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.settings-panel {
+  margin-top: 16px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label-small {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-portal {
+  background: rgba(6, 182, 212, 0.04);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: none;
+}
+
+/* Page-specific inline override classes */
+.status-msg {
+  color: var(--text-secondary);
+}
+
+.detected-job-info {
+  font-weight: 600;
+  color: #fff;
+  display: none;
+  margin-top: 4px;
+}
+
+.portal-label {
+  font-size: 0.8rem;
+  color: #06b6d4;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.portal-acc-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.btn-portal-fill {
+  background: var(--accent-secondary);
+  box-shadow: 0 4px 14px 0 rgba(6, 182, 212, 0.3);
+}
+
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-sync {
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+}
+
+.nav-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.btn-nav-small {
+  padding: 8px;
+}
+
+.flex-gap {
+  display: flex;
+  gap: 8px;
+}
+
+.gemini-input {
+  font-size: 0.8rem;
+  padding: 8px 10px;
+}
+
+.btn-save-key {
+  padding: 0 14px;
+}
+
+.key-status-text {
+  font-size: 0.75rem;
+  color: var(--color-success);
+  margin-top: 4px;
+  display: none;
+}

@@ -1,0 +1,34 @@
+# Node dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary scratch folders & data
+scratch/
+
+# Local environment configuration
+.env
+.env.local
+.env.*
+!.env.example
+
+# Databases
+*.db
+*.db-journal
+backend/prisma/*.db
+backend/prisma/*.db-journal
+
+# Workspace backup logs and json files
+*_backup_*.json
+old_profile_*.json
+
+# IDE / system files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.gemini/
+dist/
+build/
+.tmp_user_data_*

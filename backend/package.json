@@ -1,0 +1,23 @@
+{
+  "name": "ai-job-agent-backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test:adversarial": "node tests/adversarial.test.js",
+    "test:regression": "node tests/regression-runner.js",
+    "test": "node tests/adversarial.test.js && node tests/regression-runner.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.15.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "puppeteer": "^25.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.2",
+    "prisma": "^5.15.0"
+  }
+}
