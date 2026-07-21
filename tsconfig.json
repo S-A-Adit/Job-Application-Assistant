@@ -11,6 +11,8 @@
     "noEmit": true
   },
   "include": [
-    "extension/**/*.js"
+    "extension/**/*.js",
+    "backend/**/*.js",
+    "scripts/**/*.js"
   ]
 }

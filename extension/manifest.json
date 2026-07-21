@@ -42,5 +42,11 @@
       "js": ["content.js"],
       "run_at": "document_end"
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icon16.png", "icon48.png", "icon128.png", "chart.umd.min.js"],
+      "matches": ["<all_urls>"]
+    }
   ]
 }

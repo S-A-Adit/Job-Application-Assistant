@@ -52,18 +52,18 @@ body {
 
 .sidebar-menu {
   border-right: 1px solid var(--border-color);
-  padding: 30px 20px;
+  padding: 24px 16px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
   background: rgba(10, 11, 16, 0.4);
 }
 
 .menu-btn {
   width: 100%;
   text-align: left;
-  padding: 16px 20px;
-  font-size: 1.05rem;
+  padding: 12px 16px;
+  font-size: 0.95rem;
   font-weight: 500;
   border-radius: 8px;
   color: var(--text-secondary);
@@ -72,7 +72,7 @@ body {
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   transition: var(--transition-fast);
   text-decoration: none;
 }
@@ -948,4 +948,123 @@ body {
   background: rgba(99, 102, 241, 0.15);
   color: #818cf8;
   border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+/* Replay & Diagnostics Custom Cards */
+.replays-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.replay-card {
+  background: rgba(17, 20, 32, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(12px);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.replay-card:hover {
+  border-color: rgba(99, 102, 241, 0.35);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.12);
+  transform: translateY(-2px);
+}
+
+.replay-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.replay-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.replay-url {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  word-break: break-all;
+}
+
+.replay-url a {
+  color: #818cf8;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+.replay-url a:hover {
+  color: #a5b4fc;
+  text-decoration: underline;
+}
+
+.replay-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .replay-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.replay-box {
+  background: rgba(10, 12, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.replay-box-header {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.replay-log-list {
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.78rem;
+}
+
+.replay-log-item {
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 3px solid #6366f1;
+  padding: 6px 10px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+.replay-log-item.success { border-left-color: #10b981; }
+.replay-log-item.warning { border-left-color: #f59e0b; }
+.replay-log-item.error { border-left-color: #ef4444; }
+
+.replay-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
